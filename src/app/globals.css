@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ─── */
+:root {
+  --bg: #0A0A0A;
+  --bg-elevated: #111111;
+  --bg-card: #151515;
+  --bg-subtle: #1A1A1A;
+  --text-primary: #EDEDED;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent: #E07A5F;
+  --accent-hover: #E8917D;
+  --hairline: rgba(255, 255, 255, 0.06);
+  --hairline-strong: rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Base ─── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(224, 122, 95, 0.25);
+  color: #EDEDED;
+}
+
+/* ─── Grain Overlay ─── */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.grain-overlay svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.032;
+}
+
+/* ─── Hairline Utilities ─── */
+.hairline-t {
+  border-top: 1px solid var(--hairline);
+}
+
+.hairline-b {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hairline-l {
+  border-left: 1px solid var(--hairline);
+}
+
+.hairline-r {
+  border-right: 1px solid var(--hairline);
+}
+
+.hairline-strong-t {
+  border-top: 1px solid var(--hairline-strong);
+}
+
+.hairline-strong-b {
+  border-bottom: 1px solid var(--hairline-strong);
+}
+
+/* ─── Portrait Treatment ─── */
+.portrait-editorial {
+  position: relative;
+  overflow: visible;
+}
+
+.portrait-editorial img {
+  filter: contrast(1.1) brightness(0.95);
+  -webkit-mask-image:
+    linear-gradient(to bottom, black 50%, transparent 100%),
+    linear-gradient(to top, black 70%, transparent 100%),
+    linear-gradient(to right, black 50%, transparent 100%),
+    linear-gradient(to left, black 70%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, black 50%, transparent 100%),
+    linear-gradient(to top, black 70%, transparent 100%),
+    linear-gradient(to right, black 50%, transparent 100%),
+    linear-gradient(to left, black 70%, transparent 100%);
+  mask-composite: intersect;
+}
+
+/* ─── Accent Line ─── */
+.accent-line {
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* ─── Tag Pill ─── */
+.tag-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border: 1px solid var(--hairline-strong);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* ─── Focus States ─── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
