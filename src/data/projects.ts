@@ -8,6 +8,7 @@ export interface Project {
   liveUrl: string;
   featured: boolean;
   image?: string;
+  imageStyle?: 'screenshot' | 'icon';
   stats?: { label: string; value: string }[];
 }
 
@@ -23,6 +24,8 @@ export const projects: Project[] = [
     caseStudyUrl: '/projects/memotive',
     liveUrl: '#',
     featured: true,
+    image: '/images/projects/memotive-icon.png',
+    imageStyle: 'icon',
     stats: [
       { label: 'Development', value: '30 Days' },
       { label: 'iOS Phases', value: '19' },
@@ -58,9 +61,10 @@ export const projects: Project[] = [
       'An iOS app that helps dog owners find parks, connect via QR codes, and schedule play dates. Built with SwiftUI and a Supabase backend using an incremental step-based agentic workflow where every feature was specified, implemented, and verified through Claude Code. Includes 1,064 passing tests across 44 test files.',
     tags: ['iOS', 'SwiftUI', 'Supabase', 'Claude Code'],
     caseStudyUrl: '/projects/pupdates',
-    liveUrl: '#',
-    featured: false,
-    image: '/images/projects/pupdates-home.png',
+    liveUrl: 'https://apps.apple.com/app/id6757728006',
+    featured: true,
+    image: '/images/projects/pupdates-icon.png',
+    imageStyle: 'icon',
     stats: [
       { label: 'Steps Shipped', value: '109+' },
       { label: 'Tests Passing', value: '1,064' },

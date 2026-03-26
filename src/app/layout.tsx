@@ -21,6 +21,13 @@ export const metadata: Metadata = {
   title: 'Emberonix — Product Engineering + Agentic AI',
   description:
     'Boutique product studio building and shipping AI-driven SaaS and iOS products. We partner with founders and teams to design, build, and launch.',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.png', type: 'image/png', sizes: '64x64' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'Emberonix — Product Engineering + Agentic AI',
     description:

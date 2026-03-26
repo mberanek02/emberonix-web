@@ -68,7 +68,19 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
           )}
 
           {/* Project image */}
-          {project.image && (
+          {project.image && project.imageStyle === 'icon' ? (
+            <div className="flex items-center mb-8 gap-6">
+              <div className="relative w-24 h-24 md:w-32 md:h-32 shrink-0">
+                <Image
+                  src={project.image}
+                  alt={`${project.name} app icon`}
+                  fill
+                  className="object-contain rounded-[22%]"
+                  sizes="128px"
+                />
+              </div>
+            </div>
+          ) : project.image ? (
             <div className="relative w-full aspect-video mb-8 overflow-hidden border border-hairline">
               <Image
                 src={project.image}
@@ -78,7 +90,7 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                 sizes="(max-width: 768px) 100vw, 60vw"
               />
             </div>
-          )}
+          ) : null}
 
           <div className="flex gap-4">
             <Link
@@ -102,6 +114,16 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                 />
               </svg>
             </Link>
+            {project.liveUrl && project.liveUrl !== '#' && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-text-secondary transition-colors"
+              >
+                App Store
+              </a>
+            )}
           </div>
         </div>
       </article>
@@ -127,7 +149,19 @@ function ProjectCard({
         className="group relative flex flex-col h-full bg-bg-card border border-hairline hover:border-hairline-strong transition-colors duration-300"
       >
         {/* Project image */}
-        {project.image && (
+        {project.image && project.imageStyle === 'icon' ? (
+          <div className="flex items-center justify-center w-full aspect-[16/10] bg-bg-card border-b border-hairline p-6 md:p-8">
+            <div className="relative h-full aspect-square">
+              <Image
+                src={project.image}
+                alt={`${project.name} app icon`}
+                fill
+                className="object-contain rounded-[22%]"
+                sizes="200px"
+              />
+            </div>
+          </div>
+        ) : project.image ? (
           <div className="relative w-full aspect-[16/10] overflow-hidden border-b border-hairline">
             <Image
               src={project.image}
@@ -137,7 +171,7 @@ function ProjectCard({
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
-        )}
+        ) : null}
 
         <div className="flex flex-col flex-1 p-6 md:p-8">
           {/* Top row — number + tags */}
@@ -186,6 +220,16 @@ function ProjectCard({
             >
               Case Study
             </Link>
+            {project.liveUrl && project.liveUrl !== '#' && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-small font-sans text-text-muted hover:text-text-secondary transition-colors"
+              >
+                App Store
+              </a>
+            )}
           </div>
         </div>
 

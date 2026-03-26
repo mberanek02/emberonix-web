@@ -22,16 +22,10 @@ export function CTAFooter() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="mailto:hello@emberonix.com"
+                href="mailto:mberanek@emberonix.com"
                 className="inline-flex items-center px-7 py-3 bg-accent text-bg text-small font-sans font-medium tracking-wide hover:bg-accent-hover transition-colors duration-200"
               >
                 Get In Touch
-              </a>
-              <a
-                href="#"
-                className="inline-flex items-center px-7 py-3 border border-hairline-strong text-text-primary text-small font-sans font-medium tracking-wide hover:border-text-secondary transition-colors duration-200"
-              >
-                Book a Call
               </a>
             </div>
           </div>
@@ -51,7 +45,7 @@ export function CTAFooter() {
             {/* Social links */}
             <div className="flex items-center gap-6">
               <a
-                href="mailto:hello@emberonix.com"
+                href="mailto:mberanek@emberonix.com"
                 className="text-small text-text-muted hover:text-text-secondary transition-colors font-sans"
               >
                 Email
