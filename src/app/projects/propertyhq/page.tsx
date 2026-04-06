@@ -1,15 +1,10 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
-import { CTAFooter } from '@/components/CTAFooter';
-import {
-  ProjectHero,
-  ProjectSection,
-  ProjectImageRow,
-  AgenticStep,
-  TechItem,
-} from '@/components/ProjectLayout';
+import { ScrollReveal } from '@/components/ScrollReveal';
+import { EmberonixMonogram } from '@/components/EmberonixMonogram';
 
 const BackgroundParticles = dynamic(
   () =>
@@ -17,223 +12,237 @@ const BackgroundParticles = dynamic(
   { ssr: false }
 );
 
+function FeatureCard({
+  title,
+  description,
+  icon,
+}: {
+  title: string;
+  description: string;
+  icon: string;
+}) {
+  return (
+    <div className="py-6 md:py-8 hairline-b last:border-0">
+      <div className="flex items-start gap-4">
+        <span className="text-h2 shrink-0 mt-0.5" aria-hidden="true">
+          {icon}
+        </span>
+        <div>
+          <h3 className="font-serif text-h3 font-light text-text-primary mb-2">
+            {title}
+          </h3>
+          <p className="font-sans text-body text-text-secondary leading-relaxed">
+            {description}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ModuleCard({
+  name,
+  description,
+}: {
+  name: string;
+  description: string;
+}) {
+  return (
+    <div className="bg-bg-card border border-hairline p-6">
+      <h4 className="font-serif text-h3 font-light text-accent mb-3">{name}</h4>
+      <p className="font-sans text-body text-text-secondary leading-relaxed">
+        {description}
+      </p>
+    </div>
+  );
+}
+
 export default function PropertyHQPage() {
   return (
     <>
       <BackgroundParticles />
       <Navbar />
       <main className="relative z-10">
-        <ProjectHero
-          name="PropertyHQ"
-          tagline="A modular SaaS platform for contractors — 160+ plans shipped across 38 phases by a solo developer using structured agentic workflows."
-          tags={['Next.js', 'SaaS', 'AI Assistant', 'Stripe', 'Prisma', 'TypeScript']}
-          stats={[
-            { label: 'Plans Shipped', value: '160+' },
-            { label: 'Source Files', value: '548' },
-            { label: 'Lines of Code', value: '82K' },
-            { label: 'Trade Modules', value: '4' },
-          ]}
-        />
+        {/* ─── Hero ─── */}
+        <section className="pt-32 md:pt-44 pb-16 md:pb-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <Link
+                href="/#projects"
+                className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-accent transition-colors mb-10"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M13 7H3m0 0l4-4M3 7l4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                All Projects
+              </Link>
+            </ScrollReveal>
 
-        {/* Overview */}
-        <ProjectSection label="Overview" title="The Product">
-          <div className="max-w-3xl">
-            <p className="font-sans text-body-lg text-text-secondary leading-relaxed mb-6">
-              PropertyHQ is a modular SaaS platform where construction and property service businesses subscribe to trade-specific modules and get a complete job management system tailored to their trade. Any contractor can sign up, activate only the modules they need (Flip, Renovations, HVAC, or Plumbing), and immediately have scheduling, budgeting, invoicing, and task management built for how they actually work.
-            </p>
-            <p className="font-sans text-body text-text-muted leading-relaxed mb-6">
-              The platform includes Rex, an AI assistant with 17+ tools that can parse receipts, generate estimates, manage documents, answer budget questions, and create tasks — all with a confirm-before-acting pattern so data is never silently mutated. A customer portal lets end-clients view project timelines, approve invoices, and communicate with contractors through magic-link authentication.
-            </p>
-            <p className="font-sans text-body text-text-muted leading-relaxed">
-              Every line of the 82K LOC codebase was written through structured agentic development — Plan-Apply-Unify for features, GSD for research, and parallel agent teams for cross-module work. The project demonstrates what a single developer can ship when AI-assisted workflows are treated as a serious engineering discipline.
-            </p>
+            <ScrollReveal>
+              <h1 className="font-serif text-display-sm md:text-display font-light text-text-primary mb-6">
+                PropertyHQ
+              </h1>
+              <p className="font-sans text-h3 md:text-h2 text-text-secondary font-light max-w-3xl leading-snug mb-4">
+                Job management built for your trade.
+              </p>
+              <p className="font-sans text-body-lg text-text-muted max-w-2xl leading-relaxed mb-10">
+                A modular platform where contractors activate only the tools they need. Property flipping, renovations, HVAC, plumbing &mdash; each module is purpose-built for how that trade actually works.
+              </p>
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href="https://propertyhq.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-7 py-3 bg-accent text-bg text-small font-sans font-medium tracking-wide hover:bg-accent-hover transition-colors duration-200"
+                >
+                  Visit PropertyHQ
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M1 7h11m0 0L8 3m4 4L8 11"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </ScrollReveal>
           </div>
-          <ProjectImageRow
-            images={[
-              { src: '/images/projects/propertyhq-dashboard.png', alt: 'PropertyHQ dashboard' },
-              { src: '/images/projects/propertyhq-rex.png', alt: 'Rex AI assistant' },
-            ]}
-          />
-        </ProjectSection>
+        </section>
 
-        {/* Agentic Workflow */}
-        <ProjectSection label="Agentic Workflow" title="How It Was Built">
-          <div className="max-w-3xl mb-10">
-            <p className="font-sans text-body-lg text-text-secondary leading-relaxed mb-8">
-              PropertyHQ is the most complete demonstration of agentic development at scale. The project used a decision tree to route every task to the right workflow based on complexity, and parallel agent teams to ship cross-module features simultaneously.
-            </p>
-          </div>
+        {/* ─── What It Does ─── */}
+        <section className="py-16 md:py-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <div className="flex items-center gap-4 mb-4">
+                <EmberonixMonogram size={16} className="text-text-muted opacity-50" />
+                <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
+                  Features
+                </span>
+              </div>
+              <h2 className="font-serif text-h1 md:text-h1 font-light text-text-primary mb-2">
+                Everything a Contractor Needs
+              </h2>
+              <div className="accent-line mt-4 mb-10 md:mb-14" />
+            </ScrollReveal>
 
-          {/* Decision Tree */}
-          <div className="mb-12">
-            <h3 className="font-serif text-h2 font-light text-text-primary mb-6">
-              Task Routing Decision Tree
-            </h3>
-            <div className="max-w-3xl">
-              <AgenticStep
-                number="01"
-                title="Tiny — Direct Edit"
-                description="Single-file typos, missing imports, config tweaks. No framework ceremony needed — just fix it."
-              />
-              <AgenticStep
-                number="02"
-                title="Small — GSD Quick"
-                description="2–3 file changes with well-understood scope. Fast execution tracked in STATE.md with atomic commits."
-              />
-              <AgenticStep
-                number="03"
-                title="Medium — Paul (Plan-Apply-Unify)"
-                description="Standard feature work. Every plan has YAML frontmatter, BDD acceptance criteria, file boundaries, and an autonomous flag. 160+ plans shipped this way."
-              />
-              <AgenticStep
-                number="04"
-                title="Large — Paul + Research"
-                description="Architectural changes preceded by GSD research phases. Deep codebase mapping before planning begins."
-              />
-              <AgenticStep
-                number="05"
-                title="Parallel — Agent Teams"
-                description="Cross-module features shipped by multiple agents simultaneously: module-parallel (same feature across Flip/Reno/HVAC/Plumbing), layer-parallel (data + UI in parallel), or investigation teams racing to root-cause issues."
-              />
-            </div>
-          </div>
-
-          {/* Quality Gates */}
-          <div>
-            <h3 className="font-serif text-h2 font-light text-text-primary mb-6">
-              Quality Gates
-            </h3>
-            <div className="max-w-3xl">
-              <p className="font-sans text-body text-text-muted leading-relaxed mb-4">
-                Medium and large features passed through additional verification layers. A Devil&rsquo;s Advocate agent challenged assumptions during planning and reviewed implementations for edge cases. An Auditor agent verified acceptance criteria were met post-implementation. Pre-commit hooks enforced i18n parity across English and Spanish translations on every commit.
-              </p>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Every plan&rsquo;s SUMMARY.md documented deviations from the original plan, auto-fixed issues, and decisions made with rationale — creating an audit trail that future sessions could reference for architectural context.
-              </p>
-            </div>
-          </div>
-        </ProjectSection>
-
-        {/* Modules */}
-        <ProjectSection label="Architecture" title="Modular by Design">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mb-10">
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Flip Module</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Property flipping with portfolio management, budget tracking with 100+ cost code presets, transaction ledger, and task management with photo-required completion for construction verification.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Renovations Module</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Client-based remodeling with estimates, selections management, change orders, and a complete invoice lifecycle (Draft → Sent → Paid) with Stripe Connect payment processing.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">HVAC Module</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Service and install jobs with scope builder, scheduling, and invoicing. Designed for HVAC contractors who need to manage both maintenance calls and larger installation projects.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Plumbing Module</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Distinct job and customer models built for plumbing contractors, sharing the platform&rsquo;s scheduling, invoicing, and task infrastructure while maintaining trade-specific workflows.
-              </p>
-            </div>
-          </div>
-          <ProjectImageRow
-            images={[
-              { src: '/images/projects/propertyhq-flip.png', alt: 'Flip module property view' },
-              { src: '/images/projects/propertyhq-reno.png', alt: 'Renovations timeline' },
-            ]}
-          />
-        </ProjectSection>
-
-        {/* Key Platform Features */}
-        <ProjectSection label="Platform" title="Cross-Module Features">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Rex AI Assistant</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                17+ owner tools for receipt parsing, budget Q&A, task/vendor/client creation, estimate generation, and document management. 7 foreman tools for field work. Confirm-before-acting pattern, core memories, rate limiting, and org-scoped Zod validation.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Financial Pipeline</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                End-to-end invoicing with Stripe Connect (ACH + card), QuickBooks sync with AES-256 encrypted tokens and auto-refresh, public invoice approval pages, and estimate-to-invoice conversion across all modules.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Customer Portal</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Magic-link authenticated portal where end-clients view project timelines, approve invoices, browse photo galleries, and message their contractor — all without creating an account.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Proactive Insights</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                18 owner insights and 5 foreman insights generated deterministically (zero LLM calls) — overdue tasks, budget overruns, stale jobs, worker overload, pipeline health, and expense spikes with i18n templates.
-              </p>
-            </div>
-          </div>
-        </ProjectSection>
-
-        {/* Tech Stack */}
-        <ProjectSection label="Technology" title="Tech Stack">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 max-w-4xl">
-            <div>
-              <h4 className="font-serif text-h3 font-light text-text-primary mb-4">Frontend</h4>
-              <TechItem name="Next.js 16" detail="App Router, Server Components, Server Actions" />
-              <TechItem name="TypeScript (strict)" detail="548 source files, Zod validation" />
-              <TechItem name="Tailwind + shadcn/ui" detail="Radix primitives, Lucide icons" />
-              <TechItem name="next-intl" detail="EN/ES with pre-commit parity enforcement" />
-              <TechItem name="Framer Motion" detail="Animations and page transitions" />
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-text-primary mb-4">Backend & Infra</h4>
-              <TechItem name="Prisma" detail="18-file multi-schema, soft deletes" />
-              <TechItem name="NextAuth v5" detail="Google OAuth, JWT refresh rotation" />
-              <TechItem name="Stripe" detail="Subscriptions, Connect, webhook lifecycle" />
-              <TechItem name="Sentry" detail="All 3 runtimes, source maps, tunnel route" />
-              <TechItem name="Upstash Redis" detail="Rate limiting, per-org token buckets" />
-            </div>
-          </div>
-        </ProjectSection>
-
-        {/* Development Timeline */}
-        <ProjectSection label="Timeline" title="Development History">
-          <div className="max-w-3xl">
-            <div className="space-y-4">
-              {[
-                { version: 'v1.0', phases: '1–9', plans: '61', date: 'Jan 2025', desc: 'Core platform — auth, modules, budgets, tasks, dashboard' },
-                { version: 'v2.0', phases: '10–15', plans: '34', date: 'Feb 2026', desc: 'Modularization — trade-specific modules, foreman portal' },
-                { version: 'v2.1', phases: '16', plans: '8', date: 'Feb 2026', desc: 'Plumbing module — fourth trade vertical' },
-                { version: 'v3.0', phases: '17–22', plans: '17', date: 'Feb 2026', desc: 'Task-forward UX — polymorphic tasks, photo-required completion' },
-                { version: 'v4.0', phases: '27–29', plans: '12', date: 'Feb 2026', desc: 'Notifications, scheduling, owner/foreman calendars' },
-                { version: 'v5.0', phases: '30–36', plans: '20', date: 'Mar 2026', desc: 'Financial pipeline — Stripe Connect, QuickBooks, customer portal' },
-                { version: 'Rex', phases: '37–38', plans: 'Ongoing', date: 'Mar 2026', desc: 'AI assistant — 17+ tools, security hardening, core memories' },
-              ].map((milestone) => (
-                <div key={milestone.version} className="flex gap-6 py-4 hairline-b">
-                  <div className="shrink-0 w-16">
-                    <span className="font-serif text-body-lg font-light text-accent">{milestone.version}</span>
-                  </div>
-                  <div className="flex-1">
-                    <span className="font-sans text-body text-text-primary">{milestone.desc}</span>
-                    <div className="flex gap-4 mt-1">
-                      <span className="text-caption text-text-muted font-sans">Phases {milestone.phases}</span>
-                      <span className="text-caption text-text-muted font-sans">{milestone.plans} plans</span>
-                      <span className="text-caption text-text-muted font-sans">{milestone.date}</span>
-                    </div>
-                  </div>
+            <ScrollReveal delay={0.05}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 max-w-5xl">
+                <div>
+                  <FeatureCard
+                    icon="🧩"
+                    title="Modular by Design"
+                    description="Activate only the modules your business needs — Flip, Renovations, HVAC, or Plumbing. Each one is tailored to the workflows, budgets, and terminology of that specific trade."
+                  />
+                  <FeatureCard
+                    icon="🤖"
+                    title="Rex AI Assistant"
+                    description="An AI assistant that parses receipts, generates estimates, answers budget questions, creates tasks, and manages documents. Always confirms before making changes."
+                  />
+                  <FeatureCard
+                    icon="💰"
+                    title="Invoicing & Payments"
+                    description="Full invoice lifecycle from draft to paid. Stripe Connect for ACH and card payments. QuickBooks sync keeps your books up to date automatically."
+                  />
                 </div>
-              ))}
+                <div>
+                  <FeatureCard
+                    icon="📋"
+                    title="Job & Task Management"
+                    description="Scheduling, budgeting, task assignment, and photo-required completion for construction verification. Manage everything from one dashboard."
+                  />
+                  <FeatureCard
+                    icon="🏠"
+                    title="Customer Portal"
+                    description="Your clients view project timelines, approve invoices, browse photo galleries, and message you — all through a simple magic-link login. No account creation required."
+                  />
+                  <FeatureCard
+                    icon="📊"
+                    title="Proactive Insights"
+                    description="Automatic alerts for overdue tasks, budget overruns, stale jobs, worker overload, and expense spikes. Know what needs attention before it becomes a problem."
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ─── Trade Modules ─── */}
+        <section className="py-16 md:py-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <div className="flex items-center gap-4 mb-4">
+                <EmberonixMonogram size={16} className="text-text-muted opacity-50" />
+                <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
+                  Modules
+                </span>
+              </div>
+              <h2 className="font-serif text-h1 md:text-h1 font-light text-text-primary mb-2">
+                Built for Your Trade
+              </h2>
+              <div className="accent-line mt-4 mb-10 md:mb-14" />
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.05}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl">
+                <ModuleCard
+                  name="Flip"
+                  description="Property flipping with portfolio management, budget tracking with 100+ cost code presets, transaction ledger, and photo-verified task completion."
+                />
+                <ModuleCard
+                  name="Renovations"
+                  description="Client-based remodeling with estimates, selections management, change orders, and a complete invoice lifecycle with Stripe Connect payments."
+                />
+                <ModuleCard
+                  name="HVAC"
+                  description="Service and install jobs with scope builder, scheduling, and invoicing. Built for contractors managing both maintenance calls and larger installations."
+                />
+                <ModuleCard
+                  name="Plumbing"
+                  description="Job and customer management built for plumbing contractors, with shared scheduling, invoicing, and task infrastructure plus trade-specific workflows."
+                />
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ─── Footer Links ─── */}
+        <section className="py-16 md:py-20 hairline-t">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div className="flex flex-wrap gap-6">
+                <a
+                  href="https://propertyhq.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-sans text-body text-text-secondary hover:text-accent transition-colors"
+                >
+                  Visit PropertyHQ
+                </a>
+                <Link
+                  href="/projects/propertyhq/tech"
+                  className="font-sans text-body text-text-muted hover:text-accent transition-colors"
+                >
+                  How It&rsquo;s Built &rarr;
+                </Link>
+              </div>
+              <div className="flex items-center gap-4">
+                <EmberonixMonogram size={20} className="text-text-muted opacity-40" />
+                <span className="text-small text-text-muted font-sans">
+                  &copy; {new Date().getFullYear()} Emberonix
+                </span>
+              </div>
             </div>
           </div>
-        </ProjectSection>
+        </section>
       </main>
-      <CTAFooter />
     </>
   );
 }

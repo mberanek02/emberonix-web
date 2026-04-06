@@ -1,14 +1,10 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
-import { CTAFooter } from '@/components/CTAFooter';
-import {
-  ProjectHero,
-  ProjectSection,
-  AgenticStep,
-  TechItem,
-} from '@/components/ProjectLayout';
+import { ScrollReveal } from '@/components/ScrollReveal';
+import { EmberonixMonogram } from '@/components/EmberonixMonogram';
 
 const BackgroundParticles = dynamic(
   () =>
@@ -16,189 +12,334 @@ const BackgroundParticles = dynamic(
   { ssr: false }
 );
 
+function FeatureCard({
+  title,
+  description,
+  icon,
+}: {
+  title: string;
+  description: string;
+  icon: string;
+}) {
+  return (
+    <div className="py-6 md:py-8 hairline-b last:border-0">
+      <div className="flex items-start gap-4">
+        <span className="text-h2 shrink-0 mt-0.5" aria-hidden="true">
+          {icon}
+        </span>
+        <div>
+          <h3 className="font-serif text-h3 font-light text-text-primary mb-2">
+            {title}
+          </h3>
+          <p className="font-sans text-body text-text-secondary leading-relaxed">
+            {description}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PricingCard({
+  plan,
+  price,
+  period,
+  note,
+  highlight,
+}: {
+  plan: string;
+  price: string;
+  period: string;
+  note?: string;
+  highlight?: boolean;
+}) {
+  return (
+    <div
+      className={`relative p-8 ${
+        highlight
+          ? 'bg-bg-elevated border border-accent/20'
+          : 'bg-bg-card border border-hairline'
+      }`}
+    >
+      {highlight && (
+        <span className="absolute top-0 left-8 -translate-y-1/2 bg-accent text-bg text-caption font-sans font-medium uppercase tracking-wider px-3 py-1">
+          Best Value
+        </span>
+      )}
+      <p className="font-sans text-caption uppercase tracking-widest text-text-muted mb-4">
+        {plan}
+      </p>
+      <div className="flex items-baseline gap-1 mb-1">
+        <span className="font-serif text-display-sm font-light text-text-primary">
+          {price}
+        </span>
+        <span className="font-sans text-body text-text-muted">/{period}</span>
+      </div>
+      {note && (
+        <p className="font-sans text-small text-accent mt-2">{note}</p>
+      )}
+    </div>
+  );
+}
+
 export default function MemotivePage() {
   return (
     <>
       <BackgroundParticles />
       <Navbar />
       <main className="relative z-10">
-        <ProjectHero
-          name="Memotive"
-          tagline="A premium AI health coach that remembers everything about you — built from concept to TestFlight in 30 days using dual agentic frameworks."
-          tags={['iOS', 'AI Agents', 'FastAPI', 'Claude', 'SwiftUI', 'Supabase']}
-          stats={[
-            { label: 'Development', value: '30 Days' },
-            { label: 'iOS Phases', value: '19' },
-            { label: 'Backend Tests', value: '465' },
-            { label: 'Health Metrics', value: '16' },
-          ]}
-        />
+        {/* ─── Hero ─── */}
+        <section className="pt-32 md:pt-44 pb-16 md:pb-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <Link
+                href="/#projects"
+                className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-accent transition-colors mb-10"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M13 7H3m0 0l4-4M3 7l4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                All Projects
+              </Link>
+            </ScrollReveal>
 
-        {/* Overview */}
-        <ProjectSection label="Overview" title="The Product">
-          <div className="max-w-3xl">
-            <p className="font-sans text-body-lg text-text-secondary leading-relaxed mb-6">
-              Memotive is a conversational iOS app where an AI coach provides deeply personalized nutrition, fitness, and wellness guidance. Unlike generic fitness trackers that rely on forms and dashboards, Memotive&rsquo;s coach <em>remembers</em> everything — every dietary restriction, every preference, every goal — through a semantic memory system powered by pgvector and VoyageAI embeddings.
-            </p>
-            <p className="font-sans text-body text-text-muted leading-relaxed mb-6">
-              Users interact through natural conversation. They can snap photos of meals for instant macro analysis, sync 16 Apple Health metrics for context-aware coaching, and journal their progress — all without filling out a single form. The coach streams responses word-by-word via SSE and intelligently routes between Claude Sonnet (complex reasoning) and Haiku (routine tasks) to keep per-user costs at $4–6/month.
-            </p>
-            <p className="font-sans text-body text-text-muted leading-relaxed">
-              The entire product — native iOS app, FastAPI backend, Supabase database with RLS policies, Railway deployment, StoreKit 2 subscriptions, and Sentry monitoring — was built from zero to TestFlight in 30 days by a solo developer using agentic coding workflows.
-            </p>
-          </div>
-        </ProjectSection>
-
-        {/* Agentic Workflow */}
-        <ProjectSection label="Agentic Workflow" title="How It Was Built">
-          <div className="max-w-3xl mb-10">
-            <p className="font-sans text-body-lg text-text-secondary leading-relaxed mb-8">
-              Memotive used two distinct agentic frameworks, each optimized for its codebase. A central CLAUDE.md document coordinated both, with optional critic and auditor agents challenging assumptions and verifying acceptance criteria.
-            </p>
-          </div>
-
-          {/* Paul Framework */}
-          <div className="mb-12">
-            <h3 className="font-serif text-h2 font-light text-text-primary mb-2">
-              Paul Framework <span className="text-accent">(iOS)</span>
-            </h3>
-            <p className="font-sans text-body text-text-muted mb-6 max-w-3xl leading-relaxed">
-              A Plan-Apply-Unify loop for structured SwiftUI development. 19 phases completed across 4 milestones (v1.0–v4.0), each with explicit acceptance criteria and autonomous execution.
-            </p>
-            <div className="max-w-3xl">
-              <AgenticStep
-                number="01"
-                title="Plan"
-                description="Each phase begins with a PLAN.md containing YAML frontmatter (phase ID, plan number, dependencies, files to modify) and BDD-style acceptance criteria (AC-1 through AC-N). The plan is designed to be Claude-executable without clarifying questions."
-              />
-              <AgenticStep
-                number="02"
-                title="Apply"
-                description="Claude executes the plan autonomously — implementing features, running verification, and auto-fixing issues as they arise. No manual intervention between plan and completion."
-              />
-              <AgenticStep
-                number="03"
-                title="Unify"
-                description="A mandatory close-the-loop step that generates a SUMMARY.md documenting what actually happened: acceptance criteria results, decisions made (with rationale), deviations from plan, and readiness for the next phase."
-              />
-            </div>
-          </div>
-
-          {/* GSD Framework */}
-          <div className="mb-12">
-            <h3 className="font-serif text-h2 font-light text-text-primary mb-2">
-              GSD Framework <span className="text-accent">(Backend)</span>
-            </h3>
-            <p className="font-sans text-body text-text-muted mb-6 max-w-3xl leading-relaxed">
-              A &ldquo;Get Shit Done&rdquo; framework for rapid Python iteration with a decision tree that routes tasks by complexity: direct edits for single-file bugs, quick mode for 2–3 file changes, and full research-plan-execute cycles for features touching 4+ files.
-            </p>
-          </div>
-
-          {/* Agent Teams */}
-          <div>
-            <h3 className="font-serif text-h2 font-light text-text-primary mb-2">
-              Cross-Repo Agent Teams
-            </h3>
-            <p className="font-sans text-body text-text-muted mb-6 max-w-3xl leading-relaxed">
-              For cross-cutting features, agent teams were spun up with explicit roles: a &ldquo;brain&rdquo; agent building the backend (GSD), an &ldquo;iOS&rdquo; agent building the UI (Paul), an optional critic challenging assumptions during planning, and an optional auditor verifying acceptance criteria post-implementation.
-            </p>
-          </div>
-        </ProjectSection>
-
-        {/* Key Features */}
-        <ProjectSection label="Shipped Features" title="What Was Built">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Live Streaming Chat</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                SSE-streamed word-by-word responses with smart model routing — Claude Sonnet for complex coaching, Haiku for routine tasks. Includes offline fallback and demo mode.
+            <ScrollReveal>
+              <h1 className="font-serif text-display-sm md:text-display font-light text-text-primary mb-6">
+                Memotive
+              </h1>
+              <p className="font-sans text-h3 md:text-h2 text-text-secondary font-light max-w-3xl leading-snug mb-4">
+                A coach who never forgets.
               </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Semantic Memory</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                6 memory categories (restrictions, preferences, patterns, context, motivation, milestones) with pgvector semantic search and keyword fallback. The coach never forgets.
+              <p className="font-sans text-body-lg text-text-muted max-w-2xl leading-relaxed mb-10">
+                AI-powered health coaching that remembers everything about you &mdash; your goals, your restrictions, your preferences. Personalized nutrition, fitness, and wellness guidance through natural conversation.
               </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Photo Meal Logging</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                iMessage-style photo staging with multi-image support (up to 10), per-item macro tracking, and meal deduplication. All integrated naturally into the chat flow.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Apple Health Integration</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Reads 16 HealthKit metrics including sleep breakdown, HRV, VO2 max, blood oxygen, and menstrual tracking. Anomaly detection flags concerning changes automatically.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">StoreKit 2 Subscriptions</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Full in-app purchase flow with PaywallView, transaction restoration, and App Store Server Notifications v2 webhook for real-time subscription lifecycle management.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Cost-Optimized AI</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Prompt caching delivers ~60% token savings. Real-time cost tracking with a $1.00/day per-user cap. Smart routing between models keeps the target at $4–6/month per active user.
-              </p>
-            </div>
-          </div>
-        </ProjectSection>
-
-        {/* Tech Stack */}
-        <ProjectSection label="Technology" title="Tech Stack">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 max-w-4xl">
-            <div>
-              <h4 className="font-serif text-h3 font-light text-text-primary mb-4">Frontend (iOS)</h4>
-              <TechItem name="Swift + SwiftUI" detail="iOS 17+, @Observable state management" />
-              <TechItem name="Supabase Auth" detail="JWT, Apple Sign In, email/password" />
-              <TechItem name="HealthKit" detail="16 metric types with anomaly detection" />
-              <TechItem name="StoreKit 2" detail="In-app purchases and subscription lifecycle" />
-              <TechItem name="Sentry" detail="Crash reporting and performance monitoring" />
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-text-primary mb-4">Backend</h4>
-              <TechItem name="FastAPI" detail="Async Python, structured logging" />
-              <TechItem name="Claude (Anthropic)" detail="Sonnet + Haiku with prompt caching" />
-              <TechItem name="Supabase + pgvector" detail="PostgreSQL, RLS, semantic search" />
-              <TechItem name="VoyageAI" detail="voyage-4 embeddings for memory retrieval" />
-              <TechItem name="Railway" detail="Auto-deploy on push to main" />
-            </div>
-          </div>
-        </ProjectSection>
-
-        {/* Living Documentation */}
-        <ProjectSection label="Process" title="Living Documentation">
-          <div className="max-w-3xl">
-            <p className="font-sans text-body-lg text-text-secondary leading-relaxed mb-6">
-              Every session updated three synchronized documents that kept the project coherent across dozens of coding sessions with Claude:
-            </p>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-sans text-body font-medium text-text-primary mb-1">SESSION_LOG.md</h4>
-                <p className="font-sans text-body text-text-muted leading-relaxed">
-                  A 92KB living document tracking what&rsquo;s working, what&rsquo;s broken, and what changed in each session — with code blocks, status badges, and detailed rationale.
-                </p>
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-2 px-7 py-3 bg-accent text-bg text-small font-sans font-medium tracking-wide hover:bg-accent-hover transition-colors duration-200"
+                >
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path
+                      d="M12.75 6.75C12.75 4.67893 11.0711 3 9 3C6.92893 3 5.25 4.67893 5.25 6.75C5.25 10.5 3 12 3 12H15C15 12 12.75 10.5 12.75 6.75Z"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  Download on the App Store
+                </a>
+                <span className="font-sans text-small text-text-muted">
+                  7-day free trial &middot; Cancel anytime
+                </span>
               </div>
-              <div>
-                <h4 className="font-sans text-body font-medium text-text-primary mb-1">TASKS.md</h4>
-                <p className="font-sans text-body text-text-muted leading-relaxed">
-                  A 72KB prioritized task queue with 50+ tasks, each containing problem statement, implementation approach, acceptance criteria, edge cases, and dependencies.
-                </p>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ─── What It Does ─── */}
+        <section className="py-16 md:py-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <div className="flex items-center gap-4 mb-4">
+                <EmberonixMonogram size={16} className="text-text-muted opacity-50" />
+                <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
+                  Features
+                </span>
               </div>
-              <div>
-                <h4 className="font-sans text-body font-medium text-text-primary mb-1">CONVENTIONS.md</h4>
-                <p className="font-sans text-body text-text-muted leading-relaxed">
-                  Golden rules that must never be broken: &ldquo;Coach is human&rdquo; (never break character), &ldquo;Memories are poker cards&rdquo; (internal only), cost tracking is mandatory, tool changes span both repos.
-                </p>
+              <h2 className="font-serif text-h1 md:text-h1 font-light text-text-primary mb-2">
+                Your Personal Health Coach
+              </h2>
+              <div className="accent-line mt-4 mb-10 md:mb-14" />
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.05}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 max-w-5xl">
+                <div>
+                  <FeatureCard
+                    icon="🧠"
+                    title="A Coach Who Remembers"
+                    description="Your goals, dietary restrictions, injuries, preferences, coaching style — Memotive remembers it all. Every conversation builds on the last. No repeating yourself."
+                  />
+                  <FeatureCard
+                    icon="📸"
+                    title="Photo Meal Logging"
+                    description="Snap a photo of any meal and get an instant nutrition breakdown. No searching through food databases or guessing portion sizes."
+                  />
+                  <FeatureCard
+                    icon="💬"
+                    title="Coaching, Not Logging"
+                    description="Track your nutrition through natural conversation — not tedious forms. Tell your coach what you ate, how you feel, what you're planning. They'll handle the rest."
+                  />
+                </div>
+                <div>
+                  <FeatureCard
+                    icon="❤️"
+                    title="Apple Health Integration"
+                    description="Steps, sleep, heart rate, workouts, HRV, VO2 max — your coach sees the full picture. When something looks off, they'll bring it up before you do."
+                  />
+                  <FeatureCard
+                    icon="🎯"
+                    title="Personalized Coaching Style"
+                    description="Choose how your coach talks to you — encouraging, direct, balanced, or tough love. The coach adapts to your style, not the other way around."
+                  />
+                  <FeatureCard
+                    icon="📊"
+                    title="Progress Tracking"
+                    description="Progress photos with before-and-after comparisons, nutrition trends, and milestone celebrations. See how far you've come without obsessing over the numbers."
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ─── How It Works ─── */}
+        <section className="py-16 md:py-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <div className="flex items-center gap-4 mb-4">
+                <EmberonixMonogram size={16} className="text-text-muted opacity-50" />
+                <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
+                  How It Works
+                </span>
+              </div>
+              <h2 className="font-serif text-h1 md:text-h1 font-light text-text-primary mb-2">
+                Three Steps to Better Health
+              </h2>
+              <div className="accent-line mt-4 mb-10 md:mb-14" />
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.05}>
+              <div className="max-w-3xl">
+                <div className="flex gap-6 py-6 hairline-b">
+                  <span className="font-serif text-h2 font-light text-accent opacity-50 shrink-0 w-12">
+                    01
+                  </span>
+                  <div>
+                    <h4 className="font-serif text-h3 font-light text-text-primary mb-2">
+                      Meet Your Coach
+                    </h4>
+                    <p className="font-sans text-body text-text-secondary leading-relaxed">
+                      Start a conversation. Tell your coach about your goals, your diet, your lifestyle. No forms, no questionnaires &mdash; just talk naturally. Your coach learns as you go.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-6 py-6 hairline-b">
+                  <span className="font-serif text-h2 font-light text-accent opacity-50 shrink-0 w-12">
+                    02
+                  </span>
+                  <div>
+                    <h4 className="font-serif text-h3 font-light text-text-primary mb-2">
+                      Live Your Life
+                    </h4>
+                    <p className="font-sans text-body text-text-secondary leading-relaxed">
+                      Log meals by snapping photos or just telling your coach what you ate. Share how you slept, what hurts, what&rsquo;s going well. Apple Health fills in the rest automatically.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-6 py-6">
+                  <span className="font-serif text-h2 font-light text-accent opacity-50 shrink-0 w-12">
+                    03
+                  </span>
+                  <div>
+                    <h4 className="font-serif text-h3 font-light text-text-primary mb-2">
+                      Get Smarter Over Time
+                    </h4>
+                    <p className="font-sans text-body text-text-secondary leading-relaxed">
+                      The more you talk, the better your coach gets. They&rsquo;ll notice patterns, adjust recommendations, celebrate milestones, and call out when something needs attention &mdash; all based on your full history.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ─── Pricing ─── */}
+        <section className="py-16 md:py-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <div className="flex items-center gap-4 mb-4">
+                <EmberonixMonogram size={16} className="text-text-muted opacity-50" />
+                <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
+                  Pricing
+                </span>
+              </div>
+              <h2 className="font-serif text-h1 md:text-h1 font-light text-text-primary mb-2">
+                Start Free for 7 Days
+              </h2>
+              <div className="accent-line mt-4 mb-10 md:mb-14" />
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.05}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
+                <PricingCard
+                  plan="Monthly"
+                  price="$19.99"
+                  period="month"
+                />
+                <PricingCard
+                  plan="Annual"
+                  price="$99.99"
+                  period="year"
+                  note="Save 58%"
+                  highlight
+                />
+              </div>
+              <p className="font-sans text-small text-text-muted mt-6 max-w-2xl leading-relaxed">
+                Both plans include a 7-day free trial with full access. Cancel anytime during the trial and you won&rsquo;t be charged. Subscriptions are managed through the App Store.
+              </p>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ─── Footer Links ─── */}
+        <section className="py-16 md:py-20 hairline-t">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div className="flex flex-wrap gap-6">
+                <Link
+                  href="/projects/memotive/support"
+                  className="font-sans text-body text-text-secondary hover:text-accent transition-colors"
+                >
+                  Support
+                </Link>
+                <Link
+                  href="/projects/memotive/privacy"
+                  className="font-sans text-body text-text-secondary hover:text-accent transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  href="/projects/memotive/terms"
+                  className="font-sans text-body text-text-secondary hover:text-accent transition-colors"
+                >
+                  Terms of Service
+                </Link>
+                <Link
+                  href="/projects/memotive/tech"
+                  className="font-sans text-body text-text-muted hover:text-accent transition-colors"
+                >
+                  How It&rsquo;s Built &rarr;
+                </Link>
+              </div>
+              <div className="flex items-center gap-4">
+                <EmberonixMonogram size={20} className="text-text-muted opacity-40" />
+                <span className="text-small text-text-muted font-sans">
+                  &copy; {new Date().getFullYear()} Emberonix
+                </span>
               </div>
             </div>
           </div>
-        </ProjectSection>
+        </section>
       </main>
-      <CTAFooter />
     </>
   );
 }

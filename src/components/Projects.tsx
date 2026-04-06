@@ -34,18 +34,31 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
           </div>
           {/* Stats */}
           {project.stats && (
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              {project.stats.map((stat) => (
-                <div key={stat.label}>
-                  <span className="block font-serif text-h2 font-light text-accent">
-                    {stat.value}
+            project.stats.some((s) => s.label) ? (
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                {project.stats.map((stat) => (
+                  <div key={stat.value}>
+                    <span className="block font-serif text-h2 font-light text-accent">
+                      {stat.value}
+                    </span>
+                    <span className="text-caption text-text-muted font-sans">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2 mt-4">
+                {project.stats.map((stat) => (
+                  <span
+                    key={stat.value}
+                    className="font-sans text-small text-text-secondary"
+                  >
+                    <span className="text-accent">*</span> {stat.value}
                   </span>
-                  <span className="text-caption text-text-muted font-sans">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )
           )}
         </div>
 
@@ -114,6 +127,14 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                 />
               </svg>
             </Link>
+            {project.techUrl && (
+              <Link
+                href={project.techUrl}
+                className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-text-secondary transition-colors"
+              >
+                How It&rsquo;s Built
+              </Link>
+            )}
             {project.liveUrl && project.liveUrl !== '#' && (
               <a
                 href={project.liveUrl}
@@ -121,7 +142,7 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-text-secondary transition-colors"
               >
-                App Store
+                {project.liveUrl.includes('apple.com') ? 'App Store' : 'Live Site'}
               </a>
             )}
           </div>
@@ -198,18 +219,28 @@ function ProjectCard({
 
           {/* Stats row */}
           {project.stats && (
-            <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6">
-              {project.stats.slice(0, 3).map((stat) => (
-                <div key={stat.label} className="flex items-baseline gap-1.5">
-                  <span className="font-serif text-body-lg font-light text-accent">
-                    {stat.value}
+            project.stats.some((s) => s.label) ? (
+              <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6">
+                {project.stats.slice(0, 3).map((stat) => (
+                  <div key={stat.value} className="flex items-baseline gap-1.5">
+                    <span className="font-serif text-body-lg font-light text-accent">
+                      {stat.value}
+                    </span>
+                    <span className="text-caption text-text-muted font-sans">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-x-4 gap-y-1 mb-6">
+                {project.stats.slice(0, 3).map((stat) => (
+                  <span key={stat.value} className="font-sans text-small text-text-secondary">
+                    <span className="text-accent">*</span> {stat.value}
                   </span>
-                  <span className="text-caption text-text-muted font-sans">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )
           )}
 
           {/* Links */}
@@ -220,6 +251,14 @@ function ProjectCard({
             >
               Case Study
             </Link>
+            {project.techUrl && (
+              <Link
+                href={project.techUrl}
+                className="text-small font-sans text-text-muted hover:text-text-secondary transition-colors"
+              >
+                How It&rsquo;s Built
+              </Link>
+            )}
             {project.liveUrl && project.liveUrl !== '#' && (
               <a
                 href={project.liveUrl}

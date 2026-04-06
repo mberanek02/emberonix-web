@@ -1,16 +1,10 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
+import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
-import { CTAFooter } from '@/components/CTAFooter';
-import {
-  ProjectHero,
-  ProjectSection,
-  ProjectImageRow,
-  AgenticStep,
-  TechItem,
-} from '@/components/ProjectLayout';
+import { ScrollReveal } from '@/components/ScrollReveal';
+import { EmberonixMonogram } from '@/components/EmberonixMonogram';
 
 const BackgroundParticles = dynamic(
   () =>
@@ -18,190 +12,246 @@ const BackgroundParticles = dynamic(
   { ssr: false }
 );
 
+function FeatureCard({
+  title,
+  description,
+  icon,
+}: {
+  title: string;
+  description: string;
+  icon: string;
+}) {
+  return (
+    <div className="py-6 md:py-8 hairline-b last:border-0">
+      <div className="flex items-start gap-4">
+        <span className="text-h2 shrink-0 mt-0.5" aria-hidden="true">
+          {icon}
+        </span>
+        <div>
+          <h3 className="font-serif text-h3 font-light text-text-primary mb-2">
+            {title}
+          </h3>
+          <p className="font-sans text-body text-text-secondary leading-relaxed">
+            {description}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function PupDatesPage() {
   return (
     <>
       <BackgroundParticles />
       <Navbar />
       <main className="relative z-10">
-        <ProjectHero
-          name="Pup Play Dates"
-          tagline="A dog park social app taken from concept to App Store using contract-driven Claude Code development — 109 documented steps with 1,064 passing tests."
-          tags={['iOS', 'SwiftUI', 'Supabase', 'Claude Code', 'MapKit']}
-          stats={[
-            { label: 'Steps Shipped', value: '109+' },
-            { label: 'Tests Passing', value: '1,064' },
-            { label: 'Test Files', value: '44' },
-            { label: 'Security Items', value: '9' },
-          ]}
-        />
+        {/* ─── Hero ─── */}
+        <section className="pt-32 md:pt-44 pb-16 md:pb-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <Link
+                href="/#projects"
+                className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-accent transition-colors mb-10"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M13 7H3m0 0l4-4M3 7l4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                All Projects
+              </Link>
+            </ScrollReveal>
 
-        {/* Overview */}
-        <ProjectSection label="Overview" title="The Product">
-          <div className="max-w-3xl">
-            <p className="font-sans text-body-lg text-text-secondary leading-relaxed mb-6">
-              Pup Play Dates helps dog owners discover parks, connect with other owners through QR codes, and schedule play dates for their dogs. It&rsquo;s a dog-forward social network where your dog&rsquo;s profile is the primary identity — owners are secondary.
-            </p>
-            <p className="font-sans text-body text-text-muted leading-relaxed mb-6">
-              The app features a hybrid park discovery system that combines real-time Apple Maps data with community-submitted venues verified through a voting system. Users scan QR codes to connect, propose play dates with location and time, manage multi-dog profiles with photos, and earn community trust badges through participation. A freemium subscription model (StoreKit 2) gates premium features like custom QR colors and dog avatar overlays.
-            </p>
-            <p className="font-sans text-body text-text-muted leading-relaxed">
-              Two complete implementations exist: a production iOS app (Swift/SwiftUI) submitted to the App Store, and a cross-platform React Native prototype (TypeScript/Expo) that validated the concept. The iOS version was built entirely through an incremental, contract-driven agentic workflow.
-            </p>
-          </div>
-          <ProjectImageRow
-            images={[
-              { src: '/images/projects/pupdates-home.png', alt: 'PupDates home screen' },
-              { src: '/images/projects/pupdates-parks.png', alt: 'PupDates parks discovery' },
-            ]}
-          />
-        </ProjectSection>
-
-        {/* Agentic Workflow */}
-        <ProjectSection label="Agentic Workflow" title="Contract-Driven Development">
-          <div className="max-w-3xl mb-10">
-            <p className="font-sans text-body-lg text-text-secondary leading-relaxed mb-8">
-              Pup Play Dates demonstrates a different agentic pattern than the framework-heavy approaches used in Memotive and PropertyHQ. Here, a 535-line CLAUDE.md file served as a master architectural contract that governed every interaction with Claude Code — defining exactly how steps should be proposed, implemented, and verified.
-            </p>
-          </div>
-
-          <div className="max-w-3xl mb-10">
-            <h3 className="font-serif text-h2 font-light text-text-primary mb-6">
-              The Step Protocol
-            </h3>
-            <AgenticStep
-              number="01"
-              title="Restate the Goal"
-              description="Every step begins with Claude restating the objective in 1–2 sentences. No ambiguity — if the restatement doesn't match intent, it's caught before any code is written."
-            />
-            <AgenticStep
-              number="02"
-              title="Propose a Tiny Plan"
-              description="An optional 1–3 bullet plan for the implementation. The emphasis is on 'tiny' — each step does exactly one thing, keeping changes small and reviewable."
-            />
-            <AgenticStep
-              number="03"
-              title="Implement Only That Step"
-              description="Claude implements the single step, then outputs: files created/edited (with paths), a short behavior summary, exact verification instructions ('tap X, then Y, verify Z'), and a suggestion for the next smallest step."
-            />
-            <AgenticStep
-              number="04"
-              title="Stop and Wait"
-              description="Claude stops after each step and waits for the next instruction. No runaway implementations. This creates a natural review checkpoint that caught issues early across all 109+ steps."
-            />
-          </div>
-
-          <div className="max-w-3xl">
-            <h3 className="font-serif text-h2 font-light text-text-primary mb-6">
-              Architectural Constraints
-            </h3>
-            <p className="font-sans text-body text-text-muted leading-relaxed mb-4">
-              The CLAUDE.md contract enforced strict architectural boundaries: MVVM with @Observable macro, no third-party dependencies without approval, async/await for all async patterns, @MainActor for thread safety, and SwiftData for persistence. These constraints meant Claude operated within a well-defined design space, producing consistent code across 151 Swift files.
-            </p>
-            <p className="font-sans text-body text-text-muted leading-relaxed">
-              MCP integration with Supabase meant Claude could directly apply migrations, execute SQL, and manage tables — eliminating manual context-switching between the IDE and database console.
-            </p>
-          </div>
-        </ProjectSection>
-
-        {/* Key Features */}
-        <ProjectSection label="Shipped Features" title="What Was Built">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Hybrid Park Discovery</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Apple Maps integration for real-time park data combined with community-submitted venues. A voting system auto-promotes venues to verified status at 3 confirmations.
+            <ScrollReveal>
+              <h1 className="font-serif text-display-sm md:text-display font-light text-text-primary mb-6">
+                Pup Play Dates
+              </h1>
+              <p className="font-sans text-h3 md:text-h2 text-text-secondary font-light max-w-3xl leading-snug mb-4">
+                Find parks. Meet dogs. Schedule play dates.
               </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">QR Code Connections</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Generate personalized QR codes with 6 color themes and optional dog avatar overlays (premium). Scan to instantly connect and view each other&rsquo;s dog profiles.
+              <p className="font-sans text-body-lg text-text-muted max-w-2xl leading-relaxed mb-10">
+                A social app for dog owners to discover nearby parks, connect with other dogs through QR codes, and set up play dates. Your dog is the star &mdash; their profile is front and center.
               </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Play Date Proposals</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                Create proposals with dog selection, location (from discovered or custom places), date/time, and notes. Multi-dog acceptance, photo attachments, and map integration for meetup details.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Community Trust System</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                4 badge types across 5 tiers earned through participation — park submissions, venue verifications, play date completions, and profile quality. Builds organic trust in the community.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Offline-First Architecture</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                SwiftData local persistence with async Supabase sync. Users can browse profiles, view parks, and manage favorites even without connectivity. Changes sync when back online.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-accent mb-3">Security Hardening</h4>
-              <p className="font-sans text-body text-text-muted leading-relaxed">
-                9 audit-driven security items: Keychain integration, CryptoKit encryption, nonce management for OAuth, notification payload validation, input sanitization, and debug print wrapping.
-              </p>
-            </div>
-          </div>
-          <ProjectImageRow
-            images={[
-              { src: '/images/projects/pupdates-playdates.png', alt: 'Play dates screen' },
-              { src: '/images/projects/pupdates-landing.png', alt: 'PupDates landing' },
-            ]}
-          />
-        </ProjectSection>
-
-        {/* Tech Stack */}
-        <ProjectSection label="Technology" title="Tech Stack">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 max-w-4xl">
-            <div>
-              <h4 className="font-serif text-h3 font-light text-text-primary mb-4">iOS App</h4>
-              <TechItem name="Swift + SwiftUI" detail="iOS 17+, MVVM with @Observable" />
-              <TechItem name="SwiftData" detail="Local persistence, offline-first sync" />
-              <TechItem name="MapKit" detail="MKLocalSearch, CoreLocation for distance" />
-              <TechItem name="AVFoundation" detail="QR code scanning and generation" />
-              <TechItem name="StoreKit 2" detail="Subscription tiers, trial logic" />
-            </div>
-            <div>
-              <h4 className="font-serif text-h3 font-light text-text-primary mb-4">Backend & Security</h4>
-              <TechItem name="Supabase" detail="Auth, real-time sync, storage, edge functions" />
-              <TechItem name="CryptoKit" detail="Encryption for sensitive local data" />
-              <TechItem name="Keychain" detail="Secure token and credential storage" />
-              <TechItem name="APNs" detail="Push notifications via edge functions" />
-              <TechItem name="MCP Integration" detail="Direct Supabase operations from Claude Code" />
-            </div>
-          </div>
-        </ProjectSection>
-
-        {/* Testing */}
-        <ProjectSection label="Quality" title="Test Coverage">
-          <div className="max-w-3xl">
-            <p className="font-sans text-body-lg text-text-secondary leading-relaxed mb-6">
-              With 1,064 tests across 44 test files and 14,511 lines of test code, Pup Play Dates has one of the most comprehensive test suites of any app built with agentic workflows. Tests were written alongside features — not as an afterthought — as part of the step-based development contract.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 hairline-t hairline-b">
-              <div>
-                <span className="block font-serif text-h1 font-light text-accent">44</span>
-                <span className="text-caption text-text-muted font-sans">Test Files</span>
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href="https://apps.apple.com/app/id6757728006"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-7 py-3 bg-accent text-bg text-small font-sans font-medium tracking-wide hover:bg-accent-hover transition-colors duration-200"
+                >
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path
+                      d="M12.75 6.75C12.75 4.67893 11.0711 3 9 3C6.92893 3 5.25 4.67893 5.25 6.75C5.25 10.5 3 12 3 12H15C15 12 12.75 10.5 12.75 6.75Z"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  Download on the App Store
+                </a>
+                <span className="font-sans text-small text-text-muted">
+                  Free to use &middot; Premium features available
+                </span>
               </div>
-              <div>
-                <span className="block font-serif text-h1 font-light text-accent">1,064</span>
-                <span className="text-caption text-text-muted font-sans">Tests Passing</span>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ─── What It Does ─── */}
+        <section className="py-16 md:py-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <div className="flex items-center gap-4 mb-4">
+                <EmberonixMonogram size={16} className="text-text-muted opacity-50" />
+                <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
+                  Features
+                </span>
               </div>
-              <div>
-                <span className="block font-serif text-h1 font-light text-accent">14.5K</span>
-                <span className="text-caption text-text-muted font-sans">Lines of Test Code</span>
+              <h2 className="font-serif text-h1 md:text-h1 font-light text-text-primary mb-2">
+                Everything Your Dog Needs
+              </h2>
+              <div className="accent-line mt-4 mb-10 md:mb-14" />
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.05}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 max-w-5xl">
+                <div>
+                  <FeatureCard
+                    icon="🗺️"
+                    title="Park Discovery"
+                    description="Find dog-friendly parks nearby with real-time Apple Maps data and community-submitted venues. A voting system ensures only verified spots show up."
+                  />
+                  <FeatureCard
+                    icon="📱"
+                    title="QR Code Connections"
+                    description="Generate a personalized QR code for your dog. Meet someone at the park? Scan to connect instantly and see each other's dog profiles."
+                  />
+                  <FeatureCard
+                    icon="📅"
+                    title="Play Date Scheduling"
+                    description="Propose play dates with location, date, time, and notes. Coordinate multi-dog meetups and keep track of upcoming and past play dates."
+                  />
+                </div>
+                <div>
+                  <FeatureCard
+                    icon="🐕"
+                    title="Dog-First Profiles"
+                    description="Your dog's profile is the main identity — breed, size, temperament, photos, and play style. Owners are secondary. Because let's be honest, we're all here for the dogs."
+                  />
+                  <FeatureCard
+                    icon="🏅"
+                    title="Community Trust Badges"
+                    description="Earn badges through participation — submitting parks, verifying venues, completing play dates, and building your profile. Build organic trust in the community."
+                  />
+                  <FeatureCard
+                    icon="📶"
+                    title="Works Offline"
+                    description="Browse profiles, view parks, and manage favorites even without connectivity. Everything syncs back up when you're online again."
+                  />
+                </div>
               </div>
-              <div>
-                <span className="block font-serif text-h1 font-light text-accent">25+</span>
-                <span className="text-caption text-text-muted font-sans">Services Tested</span>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ─── How It Works ─── */}
+        <section className="py-16 md:py-24">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <ScrollReveal>
+              <div className="flex items-center gap-4 mb-4">
+                <EmberonixMonogram size={16} className="text-text-muted opacity-50" />
+                <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
+                  How It Works
+                </span>
+              </div>
+              <h2 className="font-serif text-h1 md:text-h1 font-light text-text-primary mb-2">
+                Three Steps to New Friends
+              </h2>
+              <div className="accent-line mt-4 mb-10 md:mb-14" />
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.05}>
+              <div className="max-w-3xl">
+                <div className="flex gap-6 py-6 hairline-b">
+                  <span className="font-serif text-h2 font-light text-accent opacity-50 shrink-0 w-12">
+                    01
+                  </span>
+                  <div>
+                    <h4 className="font-serif text-h3 font-light text-text-primary mb-2">
+                      Create Your Dog&rsquo;s Profile
+                    </h4>
+                    <p className="font-sans text-body text-text-secondary leading-relaxed">
+                      Add your dog&rsquo;s photo, breed, size, and play style. Got multiple dogs? Add them all. Each one gets their own profile and QR code.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-6 py-6 hairline-b">
+                  <span className="font-serif text-h2 font-light text-accent opacity-50 shrink-0 w-12">
+                    02
+                  </span>
+                  <div>
+                    <h4 className="font-serif text-h3 font-light text-text-primary mb-2">
+                      Find Parks & Connect
+                    </h4>
+                    <p className="font-sans text-body text-text-secondary leading-relaxed">
+                      Discover dog parks near you. When you meet someone at the park, scan their QR code to connect. No usernames to remember, no friend requests to forget.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-6 py-6">
+                  <span className="font-serif text-h2 font-light text-accent opacity-50 shrink-0 w-12">
+                    03
+                  </span>
+                  <div>
+                    <h4 className="font-serif text-h3 font-light text-text-primary mb-2">
+                      Schedule Play Dates
+                    </h4>
+                    <p className="font-sans text-body text-text-secondary leading-relaxed">
+                      Propose a play date with a location, time, and which dogs are joining. Your connections get notified and can accept right from the app.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ─── Footer Links ─── */}
+        <section className="py-16 md:py-20 hairline-t">
+          <div className="mx-auto max-w-container px-6 md:px-10">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div className="flex flex-wrap gap-6">
+                <a
+                  href="https://apps.apple.com/app/id6757728006"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-sans text-body text-text-secondary hover:text-accent transition-colors"
+                >
+                  App Store
+                </a>
+                <Link
+                  href="/projects/pupdates/tech"
+                  className="font-sans text-body text-text-muted hover:text-accent transition-colors"
+                >
+                  How It&rsquo;s Built &rarr;
+                </Link>
+              </div>
+              <div className="flex items-center gap-4">
+                <EmberonixMonogram size={20} className="text-text-muted opacity-40" />
+                <span className="text-small text-text-muted font-sans">
+                  &copy; {new Date().getFullYear()} Emberonix
+                </span>
               </div>
             </div>
           </div>
-        </ProjectSection>
+        </section>
       </main>
-      <CTAFooter />
     </>
   );
 }

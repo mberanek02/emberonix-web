@@ -5,6 +5,7 @@ export interface Project {
   description?: string;
   tags: string[];
   caseStudyUrl: string;
+  techUrl?: string;
   liveUrl: string;
   featured: boolean;
   image?: string;
@@ -22,54 +23,57 @@ export const projects: Project[] = [
       'A conversational iOS app where an AI coach provides personalized nutrition, fitness, and wellness guidance. Semantic memory means the coach never forgets a preference, restriction, or goal. Photo-based meal logging, Apple Health integration across 16 metrics, and SSE-streamed chat — all powered by a FastAPI backend with intelligent model routing.',
     tags: ['iOS', 'AI Agents', 'FastAPI', 'Claude'],
     caseStudyUrl: '/projects/memotive',
+    techUrl: '/projects/memotive/tech',
     liveUrl: '#',
     featured: true,
     image: '/images/projects/memotive-icon.png',
     imageStyle: 'icon',
     stats: [
-      { label: 'Development', value: '30 Days' },
-      { label: 'iOS Phases', value: '19' },
-      { label: 'Backend Tests', value: '465' },
-      { label: 'Health Metrics', value: '16' },
+      { label: '', value: 'Persistent multi-session memory' },
+      { label: '', value: 'Vision-based macro extraction' },
+      { label: '', value: 'Behavioral pattern detection' },
+      { label: '', value: '16-metric Apple Health sync' },
     ],
   },
   {
     id: 'propertyhq',
     name: 'PropertyHQ',
     tagline:
-      'Modular SaaS platform for contractors — 38 phases, 160+ plans, 82K lines of TypeScript shipped with agentic workflows.',
+      'A modular SaaS platform for contractors — estimates, scheduling, invoicing, and a client portal, purpose-built using structured agentic workflows.',
     description:
       'A full-stack Next.js platform where contractors activate trade-specific modules (Flip, Renovations, HVAC, Plumbing) and get a complete job management system. Features an AI assistant (Rex) with 17+ tools, Stripe Connect payments, QuickBooks sync, a customer portal, and a proactive insights engine — all built by a solo developer using structured agent frameworks.',
     tags: ['Next.js', 'SaaS', 'AI Assistant', 'Stripe'],
     caseStudyUrl: '/projects/propertyhq',
-    liveUrl: '#',
+    techUrl: '/projects/propertyhq/tech',
+    liveUrl: 'https://propertyhq.org',
     featured: true,
     image: '/images/projects/propertyhq-dashboard.png',
     stats: [
-      { label: 'Plans Shipped', value: '160+' },
-      { label: 'Source Files', value: '548' },
-      { label: 'LOC', value: '82K' },
-      { label: 'Trade Modules', value: '4' },
+      { label: '', value: 'Trade-specific module architecture' },
+      { label: '', value: 'Confirm-before-act AI tooling' },
+      { label: '', value: 'Magic-link client portal' },
+      { label: '', value: 'Bilingual with parity enforcement' },
     ],
   },
   {
     id: 'pupdates',
     name: 'Pup Play Dates',
     tagline:
-      'Dog park social app — 109 steps from concept to App Store using contract-driven Claude Code development.',
+      'A social app for dog owners — park discovery, QR-based connections, and play date scheduling, built with structured agentic workflows.',
     description:
-      'An iOS app that helps dog owners find parks, connect via QR codes, and schedule play dates. Built with SwiftUI and a Supabase backend using an incremental step-based agentic workflow where every feature was specified, implemented, and verified through Claude Code. Includes 1,064 passing tests across 44 test files.',
-    tags: ['iOS', 'SwiftUI', 'Supabase', 'Claude Code'],
+      'A dog-first social iOS app where parks, connections, and play dates revolve around your pup. Discover nearby dog parks with community ratings, connect instantly via QR codes, and coordinate meetups — designed for real-world use with offline support built in.',
+    tags: ['iOS', 'SwiftUI', 'Supabase', 'Agentic Development'],
     caseStudyUrl: '/projects/pupdates',
+    techUrl: '/projects/pupdates/tech',
     liveUrl: 'https://apps.apple.com/app/id6757728006',
     featured: true,
     image: '/images/projects/pupdates-icon.png',
     imageStyle: 'icon',
     stats: [
-      { label: 'Steps Shipped', value: '109+' },
-      { label: 'Tests Passing', value: '1,064' },
-      { label: 'Test Files', value: '44' },
-      { label: 'Security Items', value: '9' },
+      { label: '', value: 'Dog-first identity model' },
+      { label: '', value: 'QR-based peer connection' },
+      { label: '', value: 'Community-verified venue system' },
+      { label: '', value: 'Offline-first with async sync' },
     ],
   },
 ];
