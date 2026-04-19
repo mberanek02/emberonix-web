@@ -24,7 +24,7 @@ export const projects: Project[] = [
     tags: ['iOS', 'AI Agents', 'FastAPI', 'Claude'],
     caseStudyUrl: '/projects/memotive',
     techUrl: '/projects/memotive/tech',
-    liveUrl: '#',
+    liveUrl: 'https://apps.apple.com/app/id6760320845',
     featured: true,
     image: '/images/projects/memotive-icon.png',
     imageStyle: 'icon',

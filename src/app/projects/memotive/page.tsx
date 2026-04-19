@@ -121,7 +121,9 @@ export default function MemotivePage() {
               </p>
               <div className="flex flex-wrap items-center gap-4">
                 <a
-                  href="#"
+                  href="https://apps.apple.com/app/id6760320845"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-7 py-3 bg-accent text-bg text-small font-sans font-medium tracking-wide hover:bg-accent-hover transition-colors duration-200"
                 >
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
