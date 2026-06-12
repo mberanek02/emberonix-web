@@ -52,7 +52,7 @@ function Particles() {
     <points ref={pointsRef} geometry={geometry}>
       <pointsMaterial
         size={0.08}
-        color="#E07A5F"
+        color="#F97316"
         transparent
         opacity={0.4}
         sizeAttenuation
@@ -110,9 +110,9 @@ function SecondaryParticles() {
     <points ref={pointsRef} geometry={geometry}>
       <pointsMaterial
         size={0.055}
-        color="#EDEDED"
+        color="#3B82F6"
         transparent
-        opacity={0.2}
+        opacity={0.25}
         sizeAttenuation
         depthWrite={false}
       />

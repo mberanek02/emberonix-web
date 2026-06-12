@@ -24,3 +24,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local-only reference / scratch (not part of the deployed site)
+stitch_emberonix_brand_identity_redesign/
+linkedin-page-content.md

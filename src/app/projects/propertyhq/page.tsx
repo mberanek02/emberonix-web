@@ -68,7 +68,7 @@ export default function PropertyHQPage() {
           <div className="mx-auto max-w-container px-6 md:px-10">
             <ScrollReveal>
               <Link
-                href="/#projects"
+                href="/#products"
                 className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-accent transition-colors mb-10"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

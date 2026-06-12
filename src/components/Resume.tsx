@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollReveal } from './ScrollReveal';
-import { EmberonixMonogram } from './EmberonixMonogram';
 
 /* ─── Resume Data ─── */
 
@@ -130,8 +129,8 @@ const education = 'University of North Carolina at Chapel Hill \u2014 Bachelor o
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-3 mb-6 pt-10 first:pt-0">
-      <div className="accent-line" />
-      <h3 className="text-caption uppercase tracking-widest text-accent font-sans font-medium">
+      <div className="accent-line-sm" />
+      <h3 className="mono-label text-accent">
         {children}
       </h3>
     </div>
@@ -143,24 +142,24 @@ function RoleBlock({ role }: { role: Role }) {
     <div className="mb-10 last:mb-0">
       <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-3">
         <div>
-          <h4 className="font-serif text-h3 font-light text-text-primary">
+          <h4 className="font-display uppercase text-2xl text-text-primary">
             {role.title}
           </h4>
-          <p className="text-body text-text-secondary font-sans">
-            {role.company} &middot; {role.location}
+          <p className="font-mono text-xs text-text-muted uppercase tracking-wider mt-1">
+            {role.company} · {role.location}
           </p>
         </div>
         {role.period && (
-          <span className="text-small text-text-muted font-sans shrink-0">
+          <span className="font-mono text-xs text-text-muted uppercase tracking-wider shrink-0">
             {role.period}
           </span>
         )}
       </div>
-      <ul className="space-y-2 ml-4">
+      <ul className="space-y-2 ml-4 mt-4">
         {role.bullets.map((b, i) => (
           <li
             key={i}
-            className="text-body text-text-secondary font-sans leading-relaxed relative pl-4 before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-px before:bg-text-muted"
+            className="text-body text-text-secondary font-sans leading-relaxed relative pl-5 before:content-['▸'] before:absolute before:left-0 before:top-0 before:text-accent before:text-sm"
           >
             {b}
           </li>
@@ -176,25 +175,24 @@ export function Resume() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section id="resume" className="py-24 md:py-32 bg-bg-elevated">
-      <div className="mx-auto max-w-container px-6 md:px-10">
+    <section id="resume" className="px-6 md:px-12 lg:px-16 py-20 md:py-28 bg-bg-subtle hairline-t">
+      <div className="mx-auto max-w-container">
         {/* Section header */}
         <ScrollReveal>
-          <div className="flex items-center gap-4 mb-4">
-            <EmberonixMonogram size={18} className="text-text-muted opacity-50" />
-            <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
-              Background
-            </span>
-          </div>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-2">
-            <h2 className="font-serif text-h1 md:text-display-sm font-light text-text-primary">
-              Resume
-            </h2>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+            <div>
+              <span className="mono-label text-accent block mb-4">
+                // 07 / BACKGROUND
+              </span>
+              <h2 className="font-display uppercase text-h2 md:text-h1 text-text-primary">
+                Operator Record
+              </h2>
+            </div>
             <button
               onClick={() => setOpen(!open)}
-              className="inline-flex items-center gap-2 px-6 py-2.5 border border-hairline-strong text-text-primary text-small font-sans font-medium tracking-wide hover:border-text-secondary transition-colors duration-200 self-start md:self-auto"
+              className="btn-ghost self-start md:self-auto"
             >
-              {open ? 'Collapse' : 'View Full Resume'}
+              {open ? 'COLLAPSE' : 'VIEW FULL RESUME'}
               <svg
                 width="12"
                 height="12"
@@ -212,17 +210,17 @@ export function Resume() {
               </svg>
             </button>
           </div>
-          <div className="accent-line mt-4 mb-6" />
+          <div className="accent-line mb-10" />
         </ScrollReveal>
 
         {/* Summary — always visible */}
         <ScrollReveal>
           <div className="max-w-3xl mb-4">
-            <p className="font-serif text-h3 md:text-h2 font-light text-text-primary leading-relaxed">
+            <p className="font-display uppercase text-3xl md:text-4xl text-text-primary">
               Michael Beranek
             </p>
-            <p className="text-small text-text-muted font-sans mt-1 mb-6">
-              {contact.location} &middot; {contact.email}
+            <p className="font-mono text-xs text-text-muted uppercase tracking-wider mt-2 mb-6">
+              {contact.location} · {contact.email}
             </p>
             <p className="text-body-lg text-text-secondary font-sans leading-relaxed">
               {summary}
@@ -246,11 +244,11 @@ export function Resume() {
                 <SectionLabel>Technical Skills</SectionLabel>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 mb-2">
                   {skills.map((s) => (
-                    <div key={s.label}>
-                      <span className="text-small font-sans font-medium text-text-primary">
+                    <div key={s.label} className="border-l border-hairline pl-4">
+                      <span className="mono-label text-accent">
                         {s.label}
                       </span>
-                      <p className="text-small text-text-secondary font-sans mt-0.5">
+                      <p className="text-small text-text-secondary font-sans mt-1">
                         {s.items}
                       </p>
                     </div>
@@ -263,7 +261,7 @@ export function Resume() {
                   {achievements.map((a, i) => (
                     <li
                       key={i}
-                      className="text-body text-text-secondary font-sans leading-relaxed relative pl-4 before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-px before:bg-accent"
+                      className="text-body text-text-secondary font-sans leading-relaxed relative pl-5 before:content-['▸'] before:absolute before:left-0 before:top-0 before:text-accent before:text-sm"
                     >
                       {a}
                     </li>
@@ -282,7 +280,7 @@ export function Resume() {
                   {aiExperience.map((item, i) => (
                     <li
                       key={i}
-                      className="text-body text-text-secondary font-sans leading-relaxed relative pl-4 before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-px before:bg-text-muted"
+                      className="text-body text-text-secondary font-sans leading-relaxed relative pl-5 before:content-['▸'] before:absolute before:left-0 before:top-0 before:text-accent before:text-sm"
                     >
                       {item}
                     </li>
@@ -291,13 +289,13 @@ export function Resume() {
 
                 {/* AI Projects */}
                 <SectionLabel>AI Projects</SectionLabel>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
                   {aiProjects.map((p) => (
                     <div
                       key={p.name}
-                      className="p-5 border border-hairline hover:border-hairline-strong transition-colors duration-300"
+                      className="p-5 bg-bg-card border border-hairline hover:border-accent transition-colors duration-300"
                     >
-                      <h4 className="font-serif text-body-lg font-light text-text-primary mb-1.5">
+                      <h4 className="font-display uppercase text-lg text-text-primary mb-2">
                         {p.name}
                       </h4>
                       <p className="text-small text-text-secondary font-sans leading-relaxed">

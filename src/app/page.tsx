@@ -1,34 +1,29 @@
-'use client';
-
-import dynamic from 'next/dynamic';
-import { Navbar } from '@/components/Navbar';
-import { Hero } from '@/components/Hero';
-import { Projects } from '@/components/Projects';
-import { Capabilities } from '@/components/Capabilities';
-import { Process } from '@/components/Process';
-import { Resume } from '@/components/Resume';
-import { About } from '@/components/About';
-import { CTAFooter } from '@/components/CTAFooter';
-
-const BackgroundParticles = dynamic(
-  () => import('@/components/BackgroundParticles').then((m) => m.BackgroundParticles),
-  { ssr: false }
-);
+import { Preloader } from '@/components/v2/Preloader';
+import { NavV2 } from '@/components/v2/NavV2';
+import { HeroV2 } from '@/components/v2/HeroV2';
+import { Manifesto } from '@/components/v2/Manifesto';
+import { PracticesSplit } from '@/components/v2/PracticesSplit';
+import { WorkGallery } from '@/components/v2/WorkGallery';
+import { AgenticSystems } from '@/components/v2/AgenticSystems';
+import { ProductsV2 } from '@/components/v2/ProductsV2';
+import { HowItWorks } from '@/components/v2/HowItWorks';
+import { FooterV2 } from '@/components/v2/FooterV2';
 
 export default function Home() {
   return (
     <>
-      <BackgroundParticles />
-      <Navbar />
-      <main className="relative z-10">
-        <Hero />
-        <Projects />
-        <Capabilities />
-        <Process />
-        <Resume />
-        <About />
+      <Preloader />
+      <NavV2 />
+      <main className="relative">
+        <HeroV2 />
+        <Manifesto />
+        <PracticesSplit />
+        <WorkGallery />
+        <AgenticSystems />
+        <ProductsV2 />
+        <HowItWorks />
       </main>
-      <CTAFooter />
+      <FooterV2 />
     </>
   );
 }

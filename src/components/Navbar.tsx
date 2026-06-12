@@ -3,14 +3,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { EmberonixMonogram } from './EmberonixMonogram';
 
 const navLinks = [
+  { label: 'Practices', href: '/#capabilities' },
+  { label: 'Client Work', href: '/#client-work' },
+  { label: 'Agentic', href: '/#agentic-work' },
+  { label: 'Products', href: '/#products' },
   { label: 'Resume', href: '/#resume' },
-  { label: 'Projects', href: '/#projects' },
-  { label: 'Capabilities', href: '/#capabilities' },
-  { label: 'Process', href: '/#process' },
-  { label: 'About', href: '/#about' },
   { label: 'Contact', href: '/#contact' },
 ];
 
@@ -28,24 +27,20 @@ export function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
         scrolled
-          ? 'bg-bg/90 backdrop-blur-md hairline-b'
+          ? 'bg-bg/85 backdrop-blur-xl hairline-b'
           : 'bg-transparent'
       }`}
     >
-      <div className="mx-auto max-w-container px-6 md:px-10">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
+      <div className="mx-auto max-w-container px-6 md:px-12 lg:px-16">
+        <div className="flex items-center justify-between h-20 md:h-24">
+          {/* Logo wordmark */}
           <Link
             href="/"
             className="flex items-center gap-3 group"
             aria-label="Emberonix — home"
           >
-            <EmberonixMonogram
-              size={28}
-              className="text-text-primary transition-colors group-hover:text-accent"
-            />
-            <span className="text-small font-sans font-medium tracking-wide text-text-primary">
-              Emberonix
+            <span className="font-display uppercase text-2xl md:text-3xl tracking-tight text-text-primary group-hover:text-accent transition-colors">
+              EMBERONIX
             </span>
           </Link>
 
@@ -55,36 +50,46 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-small text-text-secondary hover:text-text-primary transition-colors duration-200"
+                className="mono-label text-text-secondary hover:text-accent transition-colors duration-200"
               >
                 {link.label}
               </a>
             ))}
           </div>
 
-          {/* Mobile toggle */}
-          <button
-            className="md:hidden relative w-8 h-8 flex items-center justify-center"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-          >
-            <span
-              className={`absolute w-5 h-px bg-text-primary transition-all duration-300 ${
-                mobileOpen ? 'rotate-45' : '-translate-y-1.5'
-              }`}
-            />
-            <span
-              className={`absolute w-5 h-px bg-text-primary transition-all duration-300 ${
-                mobileOpen ? 'opacity-0' : 'opacity-100'
-              }`}
-            />
-            <span
-              className={`absolute w-5 h-px bg-text-primary transition-all duration-300 ${
-                mobileOpen ? '-rotate-45' : 'translate-y-1.5'
-              }`}
-            />
-          </button>
+          {/* CTA */}
+          <div className="flex items-center gap-4">
+            <a
+              href="#contact"
+              className="hidden md:inline-flex px-5 py-2 bg-accent text-accent-on font-mono text-xs font-bold uppercase tracking-widest hover:bg-accent-bright transition-colors"
+            >
+              Start a Project
+            </a>
+
+            {/* Mobile toggle */}
+            <button
+              className="md:hidden relative w-8 h-8 flex items-center justify-center"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+            >
+              <span
+                className={`absolute w-5 h-px bg-text-primary transition-all duration-300 ${
+                  mobileOpen ? 'rotate-45' : '-translate-y-1.5'
+                }`}
+              />
+              <span
+                className={`absolute w-5 h-px bg-text-primary transition-all duration-300 ${
+                  mobileOpen ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+              <span
+                className={`absolute w-5 h-px bg-text-primary transition-all duration-300 ${
+                  mobileOpen ? '-rotate-45' : 'translate-y-1.5'
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -96,19 +101,26 @@ export function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-            className="md:hidden bg-bg/95 backdrop-blur-md hairline-b overflow-hidden"
+            className="md:hidden bg-bg/95 backdrop-blur-xl hairline-b overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-body text-text-secondary hover:text-text-primary transition-colors"
+                  className="mono-label text-text-secondary hover:text-accent transition-colors py-1"
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}
                 </a>
               ))}
+              <a
+                href="#contact"
+                onClick={() => setMobileOpen(false)}
+                className="btn-primary justify-center mt-4"
+              >
+                Start a Project
+              </a>
             </div>
           </motion.div>
         )}

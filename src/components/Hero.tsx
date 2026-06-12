@@ -15,95 +15,85 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden iridescent-bg"
     >
-      {/* Three.js artifact — centered behind text */}
-      <div className="absolute top-1/2 left-1/2 w-[700px] h-[700px] -translate-x-1/2 -translate-y-1/2 opacity-50 lg:opacity-80">
+      {/* Engineering-blueprint artifact — smaller, right-aligned, subtle */}
+      <div className="absolute right-[-4%] top-1/2 -translate-y-1/2 w-[560px] h-[560px] md:w-[680px] md:h-[680px] lg:w-[760px] lg:h-[760px] opacity-70 pointer-events-none">
         <HeroScene />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-container w-full px-6 md:px-10 pt-32 pb-20 md:pt-40 md:pb-28">
-        <div>
-          <div className="max-w-2xl">
-            {/* Descriptor label */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: dur, delay: 0.1 }}
-              className="flex items-center gap-3 mb-8"
-            >
-              <div className="accent-line" />
-              <span className="text-caption uppercase tracking-widest text-accent font-sans font-medium">
-                Product Studio
-              </span>
-            </motion.div>
+      {/* Radial wash behind the headline so text remains legible */}
+      <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-transparent pointer-events-none" />
 
-            {/* Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: dur, delay: 0.2 }}
-              className="font-serif font-light text-display-sm md:text-display leading-none tracking-tight text-text-primary mb-6"
-            >
-              Emberonix
-            </motion.h1>
+      <div className="relative z-10 mx-auto max-w-container w-full px-6 md:px-12 lg:px-16 pt-32 pb-20 md:pt-40 md:pb-28">
+        <div className="max-w-5xl">
+          {/* Status meta — mono labels */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: dur, delay: 0.1 }}
+            className="flex flex-wrap items-center gap-3 mb-8"
+          >
+            <span className="mono-label text-text-muted">EST. 2026</span>
+            <span className="mono-label text-text-muted hidden md:inline">
+              // SYSTEM STATUS: OPERATIONAL
+            </span>
+          </motion.div>
 
-            {/* Subheadline */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: dur, delay: 0.35 }}
-              className="font-sans text-h3 md:text-h2 font-light text-text-secondary mb-6"
-            >
-              Product Engineering + Agentic AI
-            </motion.p>
+          {/* Headline — Bebas Neue, uppercase */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: dur, delay: 0.2 }}
+            className="font-display uppercase text-[56px] md:text-[88px] lg:text-display leading-[0.92] tracking-tight text-text-primary mb-10"
+          >
+            <span className="text-accent">EMBERONIX:</span>
+            <br />
+            <span className="text-blue">SITES THAT SELL.</span>
+            <br />
+            <span className="text-text-primary">AGENTS THAT SHIP.</span>
+          </motion.h1>
 
-            {/* Copy */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: dur, delay: 0.45 }}
-              className="font-sans text-body-lg text-text-muted max-w-lg mb-10 leading-relaxed"
-            >
-              I build and ship AI-driven SaaS and iOS products — and I partner
-              with founders and teams to build theirs.
-            </motion.p>
+          {/* Sub copy */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: dur, delay: 0.4 }}
+            className="font-sans text-body-lg md:text-xl text-text-secondary max-w-2xl mb-4 leading-relaxed"
+          >
+            Two practices, one engineer: exciting, design-forward websites
+            that make small businesses impossible to ignore, and
+            production-grade agentic AI for companies that need automation to
+            actually work. 20 years of engineering behind both.
+          </motion.p>
 
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: dur, delay: 0.55 }}
-              className="flex flex-wrap gap-4"
-            >
-              <a
-                href="#projects"
-                className="inline-flex items-center px-7 py-3 bg-accent text-bg text-small font-sans font-medium tracking-wide hover:bg-accent-hover transition-colors duration-200"
-              >
-                View Projects
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center px-7 py-3 border border-hairline-strong text-text-primary text-small font-sans font-medium tracking-wide hover:border-text-secondary transition-colors duration-200"
-              >
-                Let&rsquo;s Build
-              </a>
-            </motion.div>
-          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: dur, delay: 0.5 }}
+            className="mono-label text-text-muted mb-12"
+          >
+            // CLIENT SITES ● OWN PRODUCTS IN PRODUCTION ● ONE OPERATOR
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: dur, delay: 0.6 }}
+            className="flex flex-wrap gap-4"
+          >
+            <a href="#client-work" className="btn-primary">
+              I Need a Website
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8h11m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+            <a href="#agentic-work" className="btn-ghost">
+              I Need AI Engineering
+            </a>
+          </motion.div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: dur, delay: 1.2 }}
-          className="hidden lg:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2"
-        >
-          <span className="text-caption text-text-muted tracking-widest uppercase">
-            Scroll
-          </span>
-          <div className="w-px h-8 bg-gradient-to-b from-text-muted to-transparent" />
-        </motion.div>
       </div>
     </section>
   );

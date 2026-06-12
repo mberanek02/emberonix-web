@@ -2,19 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Design Tokens ─── */
+/* ─── Design Tokens — Spatial Brutalism ─── */
 :root {
+  /* Obsidian surfaces */
   --bg: #0A0A0A;
-  --bg-elevated: #111111;
-  --bg-card: #151515;
-  --bg-subtle: #1A1A1A;
-  --text-primary: #EDEDED;
-  --text-secondary: #888888;
-  --text-muted: #555555;
-  --accent: #E07A5F;
-  --accent-hover: #E8917D;
-  --hairline: rgba(255, 255, 255, 0.06);
-  --hairline-strong: rgba(255, 255, 255, 0.12);
+  --bg-elevated: #131313;
+  --bg-card: #1C1B1B;
+  --bg-container: #201F1F;
+  --bg-container-high: #2A2A2A;
+  --bg-subtle: #0E0E0E;
+  --bg-bright: #393939;
+
+  /* Text */
+  --text-primary: #E5E2E1;
+  --text-secondary: #E0C0B1;
+  --text-muted: #A78B7D;
+  --text-dim: #584237;
+
+  /* Amber — the burn */
+  --accent: #F97316;
+  --accent-hover: #FFB690;
+  --accent-bright: #FBBF24;
+  --accent-on: #552100;
+  --accent-glow: rgba(249, 115, 22, 0.35);
+  --accent-muted: rgba(249, 115, 22, 0.10);
+
+  /* Purple — system / inactive */
+  --purple: #DDB7FF;
+  --purple-container: #6F00BE;
+
+  /* Deep blue — design LOB accent */
+  --blue: #3B82F6;
+  --blue-deep: #1D4ED8;
+  --blue-dim: #1E3A8A;
+  --blue-on: #0B1B3E;
+  --blue-glow: rgba(59, 130, 246, 0.35);
+  --blue-muted: rgba(59, 130, 246, 0.10);
+
+  /* Hairlines (warm taupe at low alpha) */
+  --hairline: rgba(167, 139, 125, 0.20);
+  --hairline-strong: rgba(167, 139, 125, 0.45);
+  --outline-variant: #584237;
 }
 
 /* ─── Base ─── */
@@ -22,17 +50,37 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
 }
 
 body {
   background-color: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-sans), system-ui, sans-serif;
+  cursor: default;
+}
+
+/* Non-interactive text (headlines, section copy, marquee) shows the arrow,
+   not a text I-beam. Real affordances keep their natural cursors. */
+a, button, [role="button"], label, summary {
+  cursor: pointer;
+}
+input[type="text"], input[type="email"], input[type="search"],
+input[type="tel"], input[type="url"], input[type="password"],
+input:not([type]), textarea, [contenteditable="true"] {
+  cursor: text;
+}
+
+/* All headlines default to uppercase brutalist tracking */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), 'Bebas Neue', Impact, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 ::selection {
-  background: rgba(224, 122, 95, 0.25);
-  color: #EDEDED;
+  background: var(--accent);
+  color: var(--accent-on);
 }
 
 /* ─── Grain Overlay ─── */
@@ -46,32 +94,225 @@ body {
 .grain-overlay svg {
   width: 100%;
   height: 100%;
-  opacity: 0.032;
+  opacity: 0.025;
 }
 
 /* ─── Hairline Utilities ─── */
-.hairline-t {
-  border-top: 1px solid var(--hairline);
+.hairline-t { border-top: 1px solid var(--hairline); }
+.hairline-b { border-bottom: 1px solid var(--hairline); }
+.hairline-l { border-left: 1px solid var(--hairline); }
+.hairline-r { border-right: 1px solid var(--hairline); }
+.hairline-strong-t { border-top: 1px solid var(--hairline-strong); }
+.hairline-strong-b { border-bottom: 1px solid var(--hairline-strong); }
+
+/* ─── Glassmorphism Panel — DESIGN.md Level 2 ─── */
+.glass-panel {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(28, 27, 27, 0.55);
+  border: 1px solid rgba(167, 139, 125, 0.18);
+  position: relative;
 }
 
-.hairline-b {
-  border-bottom: 1px solid var(--hairline);
+.glass-panel-amber {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background:
+    linear-gradient(135deg, rgba(249, 115, 22, 0.04) 0%, rgba(111, 0, 190, 0.04) 100%),
+    rgba(19, 19, 19, 0.65);
+  border: 1px solid rgba(249, 115, 22, 0.18);
 }
 
-.hairline-l {
-  border-left: 1px solid var(--hairline);
+/* ─── Iridescent / Amber Glow Background ─── */
+.iridescent-bg {
+  background:
+    radial-gradient(circle at top right, rgba(249, 115, 22, 0.18), transparent 50%),
+    radial-gradient(circle at bottom left, rgba(249, 189, 34, 0.08), transparent 60%);
 }
 
-.hairline-r {
-  border-right: 1px solid var(--hairline);
+/* ─── Amber Underglow ─── */
+.amber-underglow {
+  box-shadow: 0 0 24px 0 rgba(249, 115, 22, 0.20);
 }
 
-.hairline-strong-t {
-  border-top: 1px solid var(--hairline-strong);
+.amber-underglow-strong {
+  box-shadow: 0 0 32px 4px rgba(249, 115, 22, 0.35);
 }
 
-.hairline-strong-b {
-  border-bottom: 1px solid var(--hairline-strong);
+/* ─── Accent Line ─── */
+.accent-line {
+  width: 96px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.accent-line-sm {
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* ─── Mono Label / Tag ─── */
+.mono-label {
+  font-family: var(--font-mono), 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-family: var(--font-mono), 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 0;
+  background: rgba(19, 19, 19, 0.6);
+}
+
+.tag-pill-amber {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-family: var(--font-mono), 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  background: var(--accent-muted);
+}
+
+.tag-pill-blue {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-family: var(--font-mono), 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  border: 1px solid var(--blue);
+  background: var(--blue-muted);
+}
+
+/* ─── Blue underglow — design LOB ─── */
+.blue-underglow {
+  box-shadow: 0 0 24px 0 rgba(59, 130, 246, 0.22);
+}
+
+.blue-underglow-strong {
+  box-shadow: 0 0 32px 4px rgba(59, 130, 246, 0.40);
+}
+
+/* ─── Glass panel with blue tint (design LOB cards) ─── */
+.glass-panel-blue {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background:
+    linear-gradient(135deg, rgba(59, 130, 246, 0.06) 0%, rgba(29, 78, 216, 0.04) 100%),
+    rgba(19, 19, 19, 0.65);
+  border: 1px solid rgba(59, 130, 246, 0.20);
+}
+
+/* ─── Primary Button (amber, sharp, overheat hover) ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--accent);
+  color: var(--accent-on);
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--accent);
+  border-radius: 0;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.btn-primary:hover {
+  background: var(--accent-bright);
+  box-shadow: 0 0 24px 0 rgba(249, 115, 22, 0.5);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+/* ─── Ghost Button (1px amber border) ─── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 0;
+  transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+
+/* ─── Icon Pulse (heartbeat) ─── */
+.icon-pulse {
+  animation: iconPulse 2.4s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.icon-halo {
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.45) 0%, rgba(249, 115, 22, 0.18) 40%, transparent 70%);
+  animation: iconHalo 2.4s ease-in-out infinite;
+  filter: blur(8px);
+  will-change: transform, opacity;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.045); }
+}
+
+@keyframes iconHalo {
+  0%, 100% { opacity: 0.25; transform: scale(0.95); }
+  50%      { opacity: 0.65; transform: scale(1.25); }
+}
+
+/* ─── Status Indicator ─── */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  animation: pulseAmber 2.4s ease-in-out infinite;
+}
+
+@keyframes pulseAmber {
+  0%, 100% { opacity: 0.6; box-shadow: 0 0 8px 0 rgba(249, 115, 22, 0.4); }
+  50%      { opacity: 1; box-shadow: 0 0 16px 2px rgba(249, 115, 22, 0.7); }
 }
 
 /* ─── Portrait Treatment ─── */
@@ -81,72 +322,250 @@ body {
 }
 
 .portrait-editorial img {
-  filter: contrast(1.1) brightness(0.95);
+  filter: contrast(1.15) brightness(0.92) saturate(0.85);
   -webkit-mask-image:
-    linear-gradient(to bottom, black 50%, transparent 100%),
-    linear-gradient(to top, black 70%, transparent 100%),
-    linear-gradient(to right, black 50%, transparent 100%),
-    linear-gradient(to left, black 70%, transparent 100%);
+    linear-gradient(to bottom, black 55%, transparent 100%),
+    linear-gradient(to top, black 75%, transparent 100%),
+    linear-gradient(to right, black 55%, transparent 100%),
+    linear-gradient(to left, black 75%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(to bottom, black 50%, transparent 100%),
-    linear-gradient(to top, black 70%, transparent 100%),
-    linear-gradient(to right, black 50%, transparent 100%),
-    linear-gradient(to left, black 70%, transparent 100%);
+    linear-gradient(to bottom, black 55%, transparent 100%),
+    linear-gradient(to top, black 75%, transparent 100%),
+    linear-gradient(to right, black 55%, transparent 100%),
+    linear-gradient(to left, black 75%, transparent 100%);
   mask-composite: intersect;
-}
-
-/* ─── Accent Line ─── */
-.accent-line {
-  width: 32px;
-  height: 1px;
-  background: var(--accent);
-}
-
-/* ─── Tag Pill ─── */
-.tag-pill {
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 0.6875rem;
-  line-height: 1rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  border: 1px solid var(--hairline-strong);
-  font-family: var(--font-sans), system-ui, sans-serif;
 }
 
 /* ─── Focus States ─── */
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 1px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* ─── Scrollbar ─── */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb {
-  background: var(--text-muted);
-  border-radius: 3px;
+  background: var(--outline-variant);
+  border-radius: 0;
 }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ════════════════════════════════════════════
+   V2 — THE EMBER FORGE experience layer
+   ════════════════════════════════════════════ */
+
+/* ─── Contextual cursor lens ───
+   Native cursor everywhere; this labeled lens appears only over
+   [data-cursor="view"] targets. */
+.cursor-ring {
+  position: fixed;
+  top: -48px;
+  left: -48px;
+  width: 96px;
+  height: 96px;
+  border-radius: 9999px;
+  border: 1px solid var(--accent);
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  scale: 0.55;
+  transition:
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    scale 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cursor-ring--view {
+  opacity: 1;
+  scale: 1;
+}
+
+.cursor-ring__label {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+/* ─── Preloader ─── */
+html.is-loading {
+  overflow: hidden;
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+}
+
+.preloader__panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.5%;
+  background: #070707;
+}
+
+.preloader__panel--top { top: 0; border-bottom: 1px solid rgba(249, 115, 22, 0.25); }
+.preloader__panel--bottom { bottom: 0; }
+
+.preloader__center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  z-index: 2;
+}
+
+.preloader__count {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(5rem, 14vw, 11rem);
+  line-height: 0.9;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 48px rgba(249, 115, 22, 0.35);
+}
+
+/* ─── Hero ─── */
+.hero-h1 {
+  font-size: clamp(3.4rem, 11vw, 11rem);
+}
+
+/* Syne — reserved for the EMBERONIX logotype */
+.font-wordmark {
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.hero-serif {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.hero-vignette {
+  background:
+    radial-gradient(85% 70% at 50% 45%, transparent 0%, rgba(10, 10, 10, 0.55) 100%),
+    linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, transparent 22%);
+}
+
+.scroll-line {
+  display: inline-block;
+  width: 1px;
+  height: 36px;
+  background: var(--text-muted);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  animation: scrollLine 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes scrollLine {
+  0% { transform: translateY(-100%); }
+  55% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+/* ─── Marquee ─── */
+.marquee-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(229, 226, 225, 0.35);
+}
+
+/* ─── Nav link underline sweep ─── */
+.nav-link {
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.nav-link:hover {
+  color: var(--accent);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ─── Footer monument ─── */
+.cta-monument {
+  font-size: clamp(5rem, 17vw, 18rem);
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(229, 226, 225, 0.5);
+  transition: color 0.6s ease, -webkit-text-stroke-color 0.6s ease, text-shadow 0.6s ease;
+}
+
+.cta-monument:hover {
+  color: var(--accent);
+  -webkit-text-stroke-color: var(--accent);
+  text-shadow: 0 0 80px rgba(249, 115, 22, 0.45);
+}
+
+/* ─── Misc ─── */
+.h-18 { height: 4.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring,
+  .preloader { display: none !important; }
+}
+
+/* ─── Work showcase auto-rotate progress ─── */
+@keyframes stageProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* ─── Contact form inputs ─── */
+.contact-input {
+  background: rgba(10, 10, 10, 0.7);
+  border: 1px solid var(--hairline);
+  color: var(--text-primary);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.9375rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0;
+  transition: border-color 0.2s ease;
+}
+
+.contact-input::placeholder { color: var(--text-dim); }
+.contact-input:focus {
+  outline: none;
+  border-color: var(--accent);
 }

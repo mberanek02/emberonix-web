@@ -1,7 +1,6 @@
 'use client';
 
 import { ScrollReveal } from './ScrollReveal';
-import { EmberonixMonogram } from './EmberonixMonogram';
 
 interface Step {
   number: string;
@@ -30,7 +29,7 @@ const steps: Step[] = [
   },
   {
     number: '04',
-    title: 'Launch & Iterate',
+    title: 'Iterate',
     description:
       'Go live with confidence. Measure what matters. Improve with data, not guesses.',
   },
@@ -38,63 +37,61 @@ const steps: Step[] = [
 
 export function Process() {
   return (
-    <section id="process" className="py-24 md:py-32">
-      <div className="mx-auto max-w-container px-6 md:px-10">
-        {/* Section header */}
+    <section
+      id="process"
+      className="px-6 md:px-12 lg:px-16 py-20 md:py-28 hairline-t"
+    >
+      <div className="mx-auto max-w-container">
         <ScrollReveal>
-          <div className="flex items-center gap-4 mb-4">
-            <EmberonixMonogram size={18} className="text-text-muted opacity-50" />
-            <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
-              How I Work
+          <div className="mb-12 md:mb-16">
+            <span className="mono-label text-accent block mb-4">
+              // 06 / PROCESS
             </span>
+            <h2 className="font-display uppercase text-h2 md:text-h1 text-text-primary mb-4">
+              How I Work
+            </h2>
+            <div className="accent-line" />
           </div>
-          <h2 className="font-serif text-h1 md:text-display-sm font-light text-text-primary mb-2">
-            Process
-          </h2>
-          <div className="accent-line mt-4 mb-16 md:mb-20" />
         </ScrollReveal>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border border-hairline">
           {steps.map((step, i) => (
             <ScrollReveal key={step.number} delay={i * 0.1}>
               <div
-                className={`relative py-8 md:py-0 md:px-6 lg:px-8 ${
+                className={`p-6 md:p-8 h-full bg-bg-card relative ${
                   i < steps.length - 1
-                    ? 'hairline-b md:border-b-0 md:hairline-r'
+                    ? 'border-b lg:border-b-0 lg:border-r border-hairline'
                     : ''
-                } ${i === 0 ? 'md:pl-0' : ''} ${
-                  i === steps.length - 1 ? 'md:pr-0' : ''
+                } ${i === 1 ? 'md:border-r-0 lg:border-r' : ''} ${
+                  i === 0 || i === 1 ? 'md:border-r border-hairline' : ''
                 }`}
               >
-                {/* Step number */}
-                <span className="text-caption uppercase tracking-widest text-accent font-sans font-medium block mb-4">
-                  Step {step.number}
-                </span>
+                <div className="flex items-baseline justify-between mb-4">
+                  <span className="mono-label text-accent">
+                    STEP {step.number}
+                  </span>
+                  <span className="font-display uppercase text-text-dim text-3xl opacity-40">
+                    /{step.number}
+                  </span>
+                </div>
 
-                {/* Title */}
-                <h3 className="font-serif text-h2 font-light text-text-primary mb-3">
+                <h3 className="font-display uppercase text-2xl text-text-primary mb-3">
                   {step.title}
                 </h3>
 
-                {/* Description */}
                 <p className="font-sans text-body text-text-secondary leading-relaxed">
                   {step.description}
                 </p>
 
-                {/* Connecting arrow (desktop only) */}
+                {/* Connecting arrow */}
                 {i < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-2 -translate-y-1/2 text-text-muted opacity-30">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 12 12"
-                      fill="none"
-                    >
+                  <div className="hidden lg:flex absolute top-1/2 -right-2.5 -translate-y-1/2 w-5 h-5 bg-bg-card border border-hairline items-center justify-center text-accent">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
                       <path
                         d="M2 6h8m0 0L7 3m3 3L7 9"
                         stroke="currentColor"
-                        strokeWidth="1"
+                        strokeWidth="1.2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />

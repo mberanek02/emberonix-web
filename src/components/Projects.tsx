@@ -1,207 +1,116 @@
 'use client';
 
+import { useState, type ReactNode } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ScrollReveal } from './ScrollReveal';
 import { projects, type Project } from '@/data/projects';
-import { EmberonixMonogram } from './EmberonixMonogram';
 
-/* ─── Featured Project Block ─── */
-function FeaturedCard({ project, index }: { project: Project; index: number }) {
-  const isOdd = index % 2 !== 0;
+/* ─── LOB family styling ─── */
+function family(lob: Project['lob']) {
+  if (lob === 'design') {
+    return {
+      label: 'DESIGN',
+      text: 'text-blue',
+      hover: 'hover:border-blue',
+      pill: 'tag-pill-blue',
+      gradient:
+        'radial-gradient(circle at 70% 30%, rgba(59,130,246,0.25) 0%, transparent 60%)',
+    };
+  }
+  return {
+    label: 'AGENTIC',
+    text: 'text-accent',
+    hover: 'hover:border-accent',
+    pill: 'tag-pill-amber',
+    gradient:
+      'radial-gradient(circle at 70% 30%, rgba(249,115,22,0.25) 0%, transparent 60%)',
+  };
+}
 
+/* ─── Typographic fallback (used when no image OR image fails to load) ─── */
+function TypoFallback({ project, f }: { project: Project; f: ReturnType<typeof family> }) {
   return (
-    <ScrollReveal>
-      <article
-        className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 py-14 md:py-20 hairline-b group`}
+    <div
+      className="relative w-full aspect-[16/10] bg-bg-subtle border-b border-hairline overflow-hidden flex items-center justify-center"
+      aria-hidden="true"
+    >
+      <div className="absolute inset-0 opacity-60" style={{ background: f.gradient }} />
+      <span
+        className={`relative font-display uppercase text-4xl md:text-5xl ${f.text} opacity-90 tracking-tight px-6 text-center leading-none`}
       >
-        {/* Number + meta column */}
-        <div
-          className={`lg:col-span-3 flex flex-col gap-6 ${
-            isOdd ? 'lg:order-2 lg:col-start-10' : 'lg:order-1'
-          }`}
-        >
-          <span className="font-serif text-display-sm font-light text-accent opacity-40">
-            0{index + 1}
-          </span>
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span key={tag} className="tag-pill">
-                {tag}
-              </span>
-            ))}
-          </div>
-          {/* Stats */}
-          {project.stats && (
-            project.stats.some((s) => s.label) ? (
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                {project.stats.map((stat) => (
-                  <div key={stat.value}>
-                    <span className="block font-serif text-h2 font-light text-accent">
-                      {stat.value}
-                    </span>
-                    <span className="text-caption text-text-muted font-sans">
-                      {stat.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-col gap-2 mt-4">
-                {project.stats.map((stat) => (
-                  <span
-                    key={stat.value}
-                    className="font-sans text-small text-text-secondary"
-                  >
-                    <span className="text-accent">*</span> {stat.value}
-                  </span>
-                ))}
-              </div>
-            )
-          )}
-        </div>
-
-        {/* Content column */}
-        <div
-          className={`lg:col-span-8 ${
-            isOdd ? 'lg:order-1 lg:col-start-1' : 'lg:order-2 lg:col-start-5'
-          }`}
-        >
-          <h3 className="font-serif text-h1 md:text-display-sm font-light text-text-primary mb-4 group-hover:text-accent transition-colors duration-300">
-            {project.name}
-          </h3>
-          <p className="font-sans text-body-lg text-text-secondary mb-4 max-w-2xl leading-relaxed">
-            {project.tagline}
-          </p>
-          {project.description && (
-            <p className="font-sans text-body text-text-muted mb-8 max-w-2xl leading-relaxed">
-              {project.description}
-            </p>
-          )}
-
-          {/* Project image */}
-          {project.image && project.imageStyle === 'icon' ? (
-            <div className="flex items-center mb-8 gap-6">
-              <div className="relative w-24 h-24 md:w-32 md:h-32 shrink-0">
-                <Image
-                  src={project.image}
-                  alt={`${project.name} app icon`}
-                  fill
-                  className="object-contain rounded-[22%]"
-                  sizes="128px"
-                />
-              </div>
-            </div>
-          ) : project.image ? (
-            <div className="relative w-full aspect-video mb-8 overflow-hidden border border-hairline">
-              <Image
-                src={project.image}
-                alt={`${project.name} screenshot`}
-                fill
-                className="object-cover object-top"
-                sizes="(max-width: 768px) 100vw, 60vw"
-              />
-            </div>
-          ) : null}
-
-          <div className="flex gap-4">
-            <Link
-              href={project.caseStudyUrl}
-              className="inline-flex items-center gap-2 text-small font-sans font-medium text-accent hover:text-accent-hover transition-colors"
-            >
-              Case Study
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                className="transition-transform group-hover:translate-x-0.5"
-              >
-                <path
-                  d="M1 7h11m0 0L8 3m4 4L8 11"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Link>
-            {project.techUrl && (
-              <Link
-                href={project.techUrl}
-                className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-text-secondary transition-colors"
-              >
-                How It&rsquo;s Built
-              </Link>
-            )}
-            {project.liveUrl && project.liveUrl !== '#' && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-text-secondary transition-colors"
-              >
-                {project.liveUrl.includes('apple.com') ? 'App Store' : 'Live Site'}
-              </a>
-            )}
-          </div>
-        </div>
-      </article>
-    </ScrollReveal>
+        {project.name}
+      </span>
+    </div>
   );
 }
 
-/* ─── Standard Project Card ─── */
-function ProjectCard({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) {
+/* ─── Uniform project card ─── */
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const shouldReduce = useReducedMotion();
+  const f = family(project.lob);
+  const [imageBroken, setImageBroken] = useState(false);
+
+  const hasUsableImage = !!project.image && !imageBroken;
 
   return (
-    <ScrollReveal delay={index * 0.08}>
+    <ScrollReveal delay={(index % 2) * 0.06}>
       <motion.article
-        whileHover={shouldReduce ? {} : { y: -4 }}
-        transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-        className="group relative flex flex-col h-full bg-bg-card border border-hairline hover:border-hairline-strong transition-colors duration-300"
+        whileHover={shouldReduce ? {} : { y: -2 }}
+        transition={{ duration: 0.25 }}
+        className={`group relative flex flex-col h-full bg-bg-card border border-hairline ${f.hover} transition-colors duration-300`}
       >
-        {/* Project image */}
-        {project.image && project.imageStyle === 'icon' ? (
-          <div className="flex items-center justify-center w-full aspect-[16/10] bg-bg-card border-b border-hairline p-6 md:p-8">
-            <div className="relative h-full aspect-square">
+        {/* Image OR typographic fallback */}
+        {hasUsableImage && project.imageStyle === 'icon' ? (
+          <div className="relative flex items-center justify-center w-full aspect-[16/10] bg-bg-subtle border-b border-hairline p-6 md:p-8 overflow-hidden">
+            {project.pulse && (
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              >
+                <div className="w-[55%] aspect-square rounded-full icon-halo" />
+              </div>
+            )}
+            <div
+              className={`relative h-full aspect-square ${
+                project.pulse ? 'icon-pulse' : ''
+              }`}
+            >
               <Image
-                src={project.image}
+                src={project.image as string}
                 alt={`${project.name} app icon`}
                 fill
                 className="object-contain rounded-[22%]"
                 sizes="200px"
+                onError={() => setImageBroken(true)}
               />
             </div>
           </div>
-        ) : project.image ? (
+        ) : hasUsableImage ? (
           <div className="relative w-full aspect-[16/10] overflow-hidden border-b border-hairline">
             <Image
-              src={project.image}
+              src={project.image as string}
               alt={`${project.name} screenshot`}
               fill
               className="object-cover object-top"
               sizes="(max-width: 768px) 100vw, 50vw"
+              onError={() => setImageBroken(true)}
             />
           </div>
-        ) : null}
+        ) : (
+          <TypoFallback project={project} f={f} />
+        )}
 
+        {/* Body */}
         <div className="flex flex-col flex-1 p-6 md:p-8">
-          {/* Top row — number + tags */}
-          <div className="flex items-start justify-between mb-6">
-            <span className="font-serif text-h2 font-light text-text-muted opacity-30">
-              0{index + 3}
+          {/* Top meta */}
+          <div className="flex items-start justify-between mb-5 gap-3">
+            <span className={`mono-label ${f.text}`}>
+              0{index + 1} / {f.label}
             </span>
             <div className="flex flex-wrap gap-1.5 justify-end">
-              {project.tags.slice(0, 3).map((tag) => (
+              {project.tags.slice(0, 2).map((tag) => (
                 <span key={tag} className="tag-pill">
                   {tag}
                 </span>
@@ -209,54 +118,44 @@ function ProjectCard({
             </div>
           </div>
 
-          {/* Content */}
-          <h4 className="font-serif text-h2 font-light text-text-primary mb-3 group-hover:text-accent transition-colors duration-300">
+          <h3 className="font-display uppercase text-2xl md:text-3xl text-text-primary mb-3 group-hover:text-text-primary transition-colors">
             {project.name}
-          </h4>
+          </h3>
           <p className="font-sans text-body text-text-secondary leading-relaxed flex-1 mb-6">
             {project.tagline}
           </p>
 
-          {/* Stats row */}
-          {project.stats && (
-            project.stats.some((s) => s.label) ? (
-              <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6">
-                {project.stats.slice(0, 3).map((stat) => (
-                  <div key={stat.value} className="flex items-baseline gap-1.5">
-                    <span className="font-serif text-body-lg font-light text-accent">
-                      {stat.value}
-                    </span>
-                    <span className="text-caption text-text-muted font-sans">
-                      {stat.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-wrap gap-x-4 gap-y-1 mb-6">
-                {project.stats.slice(0, 3).map((stat) => (
-                  <span key={stat.value} className="font-sans text-small text-text-secondary">
-                    <span className="text-accent">*</span> {stat.value}
-                  </span>
-                ))}
-              </div>
-            )
+          {/* Stats */}
+          {project.stats && project.stats.length > 0 && (
+            <ul className="flex flex-col gap-1.5 mb-6">
+              {project.stats.slice(0, 3).map((stat) => (
+                <li
+                  key={stat.value}
+                  className="flex items-start gap-2 font-mono text-xs text-text-muted"
+                >
+                  <span className={`${f.text} shrink-0`}>▸</span>
+                  <span>{stat.value}</span>
+                </li>
+              ))}
+            </ul>
           )}
 
           {/* Links */}
-          <div className="flex gap-4 mt-auto pt-4 hairline-t">
-            <Link
-              href={project.caseStudyUrl}
-              className="text-small font-sans font-medium text-accent hover:text-accent-hover transition-colors"
-            >
-              Case Study
-            </Link>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 mt-auto pt-4 hairline-t">
+            {project.caseStudyUrl && (
+              <Link
+                href={project.caseStudyUrl}
+                className={`mono-label ${f.text} hover:text-text-primary transition-colors`}
+              >
+                CASE STUDY
+              </Link>
+            )}
             {project.techUrl && (
               <Link
                 href={project.techUrl}
-                className="text-small font-sans text-text-muted hover:text-text-secondary transition-colors"
+                className="mono-label text-text-muted hover:text-text-secondary transition-colors"
               >
-                How It&rsquo;s Built
+                BUILD NOTES
               </Link>
             )}
             {project.liveUrl && project.liveUrl !== '#' && (
@@ -264,65 +163,124 @@ function ProjectCard({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-small font-sans text-text-muted hover:text-text-secondary transition-colors"
+                className="mono-label text-text-muted hover:text-text-secondary transition-colors"
               >
-                App Store
+                {project.liveUrl.includes('apple.com') ? 'APP STORE ↗' : 'LIVE SITE ↗'}
               </a>
             )}
           </div>
         </div>
 
-        {/* Corner accent on hover */}
-        <div className="absolute top-0 right-0 w-8 h-8 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="absolute top-0 right-0 w-px h-8 bg-accent" />
-          <div className="absolute top-0 right-0 h-px w-8 bg-accent" />
+        {/* Hover corner accent */}
+        <div className="absolute top-0 right-0 w-8 h-8 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div
+            className={`absolute top-0 right-0 w-px h-8 ${
+              project.lob === 'design' ? 'bg-blue' : 'bg-accent'
+            }`}
+          />
+          <div
+            className={`absolute top-0 right-0 h-px w-8 ${
+              project.lob === 'design' ? 'bg-blue' : 'bg-accent'
+            }`}
+          />
         </div>
       </motion.article>
     </ScrollReveal>
   );
 }
 
-/* ─── Projects Section ─── */
-export function Projects() {
-  const featured = projects.filter((p) => p.featured);
-  const standard = projects.filter((p) => !p.featured);
+/* ─── Shared work-section shell ─── */
+interface WorkSectionProps {
+  id: string;
+  label: string;
+  labelClass: string;
+  heading: ReactNode;
+  intro: ReactNode;
+  items: Project[];
+  subtle?: boolean;
+}
 
+function WorkSection({ id, label, labelClass, heading, intro, items, subtle }: WorkSectionProps) {
   return (
-    <section id="projects" className="py-24 md:py-32">
-      <div className="mx-auto max-w-container px-6 md:px-10">
-        {/* Section header */}
+    <section
+      id={id}
+      className={`px-6 md:px-12 lg:px-16 py-20 md:py-28 hairline-t ${subtle ? 'bg-bg-subtle' : ''}`}
+    >
+      <div className="mx-auto max-w-container">
+        {/* Header */}
         <ScrollReveal>
-          <div className="flex items-center gap-4 mb-4">
-            <EmberonixMonogram size={18} className="text-text-muted opacity-50" />
-            <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
-              Selected Work
-            </span>
+          <div className="mb-12 md:mb-16 max-w-3xl">
+            <span className={`mono-label ${labelClass} block mb-4`}>{label}</span>
+            <h2 className="font-display uppercase text-h2 md:text-h1 text-text-primary mb-4">
+              {heading}
+            </h2>
+            <p className="font-sans text-body text-text-secondary leading-relaxed">
+              {intro}
+            </p>
           </div>
-          <h2 className="font-serif text-h1 md:text-display-sm font-light text-text-primary mb-2">
-            Projects
-          </h2>
-          <p className="font-sans text-body text-text-muted max-w-2xl mb-2">
-            Every project below was built using agentic coding workflows with Claude Code — from structured plan-apply-unify cycles to contract-driven step-based development.
-          </p>
-          <div className="accent-line mt-4 mb-12 md:mb-16" />
         </ScrollReveal>
 
-        {/* Featured projects */}
-        <div className="mb-16 md:mb-24">
-          {featured.map((project, i) => (
-            <FeaturedCard key={project.id} project={project} index={i} />
+        {/* Uniform 2-column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          {items.map((p, i) => (
+            <ProjectCard key={p.id} project={p} index={i} />
           ))}
         </div>
-
-        {/* Standard grid */}
-        {standard.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {standard.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
-            ))}
-          </div>
-        )}
       </div>
     </section>
+  );
+}
+
+/* ─── Client Work — the web design sales pitch ─── */
+export function ClientWork() {
+  return (
+    <WorkSection
+      id="client-work"
+      label="// 02 / CLIENT WORK — WEB DESIGN & BUILD"
+      labelClass="text-blue"
+      heading={
+        <>
+          Sites that make small
+          <br />
+          businesses look big.
+        </>
+      }
+      intro={
+        <>
+          Designed, built, and shipped end-to-end for real business owners
+          <span className="text-blue"> ●</span> no agency overhead, no
+          templates, no hand-offs<span className="text-blue"> ●</span> one
+          accountable operator from first sketch to live site.
+        </>
+      }
+      items={projects.filter((p) => p.kind === 'client')}
+    />
+  );
+}
+
+/* ─── Products — own work, the engineering proof ─── */
+export function ProductWork() {
+  return (
+    <WorkSection
+      id="products"
+      label="// 04 / MY PRODUCTS — BUILT & SHIPPED SOLO"
+      labelClass="text-accent"
+      heading={
+        <>
+          What I build when
+          <br />
+          I&rsquo;m the client.
+        </>
+      }
+      intro={
+        <>
+          My own products, live in production with real users
+          <span className="text-accent"> ●</span> iOS apps, SaaS platforms,
+          App Store releases<span className="text-accent"> ●</span> conceived,
+          designed, engineered, and shipped by one person.
+        </>
+      }
+      items={projects.filter((p) => p.kind === 'product')}
+    />
   );
 }

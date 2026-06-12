@@ -2,9 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { ScrollReveal } from './ScrollReveal';
-import { EmberonixMonogram } from './EmberonixMonogram';
 
 interface ProjectHeroProps {
   name: string;
@@ -15,23 +13,23 @@ interface ProjectHeroProps {
 
 export function ProjectHero({ name, tagline, tags, stats }: ProjectHeroProps) {
   return (
-    <section className="pt-32 md:pt-40 pb-16 md:pb-24">
-      <div className="mx-auto max-w-container px-6 md:px-10">
+    <section className="pt-32 md:pt-40 pb-16 md:pb-24 hairline-b">
+      <div className="mx-auto max-w-container px-6 md:px-12 lg:px-16">
         <ScrollReveal>
           <Link
-            href="/#projects"
-            className="inline-flex items-center gap-2 text-small font-sans text-text-muted hover:text-accent transition-colors mb-8"
+            href="/#products"
+            className="inline-flex items-center gap-2 mono-label text-text-muted hover:text-accent transition-colors mb-10"
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
               <path
                 d="M13 7H3m0 0l4-4M3 7l4 4"
                 stroke="currentColor"
-                strokeWidth="1.2"
+                strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
-            All Projects
+            ALL PROJECTS
           </Link>
         </ScrollReveal>
 
@@ -43,23 +41,23 @@ export function ProjectHero({ name, tagline, tags, stats }: ProjectHeroProps) {
               </span>
             ))}
           </div>
-          <h1 className="font-serif text-display-sm md:text-display font-light text-text-primary mb-6">
+          <h1 className="font-display uppercase text-5xl md:text-7xl lg:text-display text-text-primary mb-6 leading-[0.95]">
             {name}
           </h1>
-          <p className="font-sans text-body-lg md:text-h3 text-text-secondary max-w-3xl leading-relaxed mb-10">
+          <p className="font-sans text-body-lg md:text-2xl text-text-secondary max-w-3xl leading-relaxed mb-10">
             {tagline}
           </p>
         </ScrollReveal>
 
         {stats && (
           <ScrollReveal delay={0.1}>
-            <div className="flex flex-wrap gap-8 md:gap-12 py-8 hairline-t hairline-b">
+            <div className="flex flex-wrap gap-8 md:gap-16 py-8 hairline-t hairline-b">
               {stats.map((stat) => (
                 <div key={stat.label}>
-                  <span className="block font-serif text-h1 md:text-display-sm font-light text-accent">
+                  <span className="block font-display uppercase text-3xl md:text-5xl text-accent leading-none">
                     {stat.value}
                   </span>
-                  <span className="text-caption text-text-muted font-sans uppercase tracking-wider">
+                  <span className="mono-label text-text-muted mt-2 inline-block">
                     {stat.label}
                   </span>
                 </div>
@@ -84,19 +82,16 @@ export function ProjectSection({
   delay?: number;
 }) {
   return (
-    <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-container px-6 md:px-10">
+    <section className="py-16 md:py-24 hairline-b">
+      <div className="mx-auto max-w-container px-6 md:px-12 lg:px-16">
         <ScrollReveal delay={delay}>
-          <div className="flex items-center gap-4 mb-4">
-            <EmberonixMonogram size={16} className="text-text-muted opacity-50" />
-            <span className="text-caption uppercase tracking-widest text-text-muted font-sans">
-              {label}
-            </span>
-          </div>
-          <h2 className="font-serif text-h1 md:text-h1 font-light text-text-primary mb-2">
+          <span className="mono-label text-accent block mb-4">
+            // {label}
+          </span>
+          <h2 className="font-display uppercase text-3xl md:text-5xl text-text-primary mb-6">
             {title}
           </h2>
-          <div className="accent-line mt-4 mb-10 md:mb-14" />
+          <div className="accent-line mb-10 md:mb-14" />
         </ScrollReveal>
         <ScrollReveal delay={delay + 0.05}>{children}</ScrollReveal>
       </div>
@@ -106,7 +101,7 @@ export function ProjectSection({
 
 export function ProjectImageRow({ images }: { images: { src: string; alt: string }[] }) {
   return (
-    <div className={`grid grid-cols-1 ${images.length > 1 ? 'md:grid-cols-2' : ''} gap-4 md:gap-6 my-8`}>
+    <div className={`grid grid-cols-1 ${images.length > 1 ? 'md:grid-cols-2' : ''} gap-4 my-8`}>
       {images.map((img) => (
         <div
           key={img.src}
@@ -136,11 +131,11 @@ export function AgenticStep({
 }) {
   return (
     <div className="flex gap-6 py-6 hairline-b last:border-0">
-      <span className="font-serif text-h2 font-light text-accent opacity-50 shrink-0 w-12">
+      <span className="font-display uppercase text-3xl text-accent shrink-0 w-12 leading-none">
         {number}
       </span>
       <div>
-        <h4 className="font-serif text-h3 font-light text-text-primary mb-2">{title}</h4>
+        <h4 className="font-display uppercase text-xl md:text-2xl text-text-primary mb-2">{title}</h4>
         <p className="font-sans text-body text-text-secondary leading-relaxed">{description}</p>
       </div>
     </div>
@@ -150,8 +145,8 @@ export function AgenticStep({
 export function TechItem({ name, detail }: { name: string; detail: string }) {
   return (
     <div className="py-4 hairline-b last:border-0">
-      <span className="font-sans text-body font-medium text-text-primary">{name}</span>
-      <span className="font-sans text-body text-text-muted ml-2">— {detail}</span>
+      <span className="font-mono text-sm font-bold text-accent uppercase tracking-wider">{name}</span>
+      <span className="font-sans text-body text-text-secondary ml-2">— {detail}</span>
     </div>
   );
 }
