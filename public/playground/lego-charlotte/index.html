@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Lego Charlotte — the Queen City, brick by brick</title>
+  <meta name="description" content="Scroll to fly through downtown Charlotte, NC — rebuilt entirely in LEGO. Uptown towers, the Blue Line, Romare Bearden Park and the stadium, one continuous shot." />
+  <style>
+    :root, .sw-root {
+      --sw-bg: #F3EDE3;          /* == the scene background colour */
+      --sw-ink: #22262e;
+      --sw-ink-soft: #5f6570;
+      --sw-accent: #00778B;      /* per-section accents override this at runtime */
+    }
+  </style>
+</head>
+<body>
+  <div id="top"></div>
+  <div id="world">
+    <section data-sw-seo>
+      <h1>Charlotte, rebuilt in LEGO.</h1>
+      <p>A scroll-through tour of Uptown Charlotte, North Carolina — every tower, train and tree snapped together from plastic bricks, filmed as one continuous camera flight.</p>
+      <h2>The Queen City, brick by brick — Charlotte, rebuilt in LEGO.</h2>
+      <p>A scroll-through tour of Uptown — every tower, train and tree snapped together from plastic bricks.</p>
+      <h2>South End — Ride the Blue Line.</h2>
+      <p>The tram hums past breweries and mill lofts — follow the rail trail through the city's fastest-growing mile.</p>
+      <h2>Center City green — Parks and pastime.</h2>
+      <p>Bearden's fountains on one side, the Knights' diamond on the other — towers watching over every picnic and every pitch.</p>
+      <h2>Sundays in Uptown — Keep pounding.</h2>
+      <p>Sixty-five thousand bricks loud. The tour ends where the city roars.</p>
+    </section>
+  </div>
+
+  <script src="/playground/lego-charlotte/scrub-engine.js"></script>
+  <script>
+    mountScrollWorld(document.getElementById('world'), {
+      brand: { name: 'Lego Charlotte', href: '/playground' },
+      hint: 'scroll to fly in',
+      diveScroll: 1.3,
+      sections: [
+        {
+          id: 'skyline', label: 'Uptown',
+          still: '/playground/lego-charlotte/assets/stills/skyline.png',
+          poster: '/playground/lego-charlotte/assets/skyline-poster.jpg',
+          clip: '/playground/lego-charlotte/assets/vid/skyline.mp4',
+          accent: '#00778B',
+          scroll: 1.6, linger: 0.4,
+          eyebrow: 'The Queen City, brick by brick',
+          title: 'Charlotte, rebuilt in LEGO.',
+          body: 'A scroll-through tour of Uptown — every tower, train and tree snapped together from plastic bricks.',
+          tags: ['Uptown', 'Isometric', 'One continuous shot'],
+        },
+        {
+          id: 'railline', label: 'Blue Line',
+          still: '/playground/lego-charlotte/assets/stills/railline.png',
+          poster: '/playground/lego-charlotte/assets/railline-poster.jpg',
+          clip: '/playground/lego-charlotte/assets/vid/railline.mp4',
+          accent: '#0085CA',
+          eyebrow: 'South End',
+          title: 'Ride the Blue Line.',
+          body: "The tram hums past breweries and mill lofts — follow the rail trail through the city's fastest-growing mile.",
+          tags: ['Light rail', 'Rail Trail'],
+        },
+        {
+          id: 'park', label: 'Bearden Park',
+          still: '/playground/lego-charlotte/assets/stills/park.png',
+          poster: '/playground/lego-charlotte/assets/park-poster.jpg',
+          clip: '/playground/lego-charlotte/assets/vid/park.mp4',
+          accent: '#4E9B47',
+          eyebrow: 'Center City green',
+          title: 'Parks and pastime.',
+          body: "Bearden's fountains on one side, the Knights' diamond on the other — towers watching over every picnic and every pitch.",
+          tags: ['Romare Bearden Park', 'Truist Field'],
+        },
+        {
+          id: 'stadium', label: 'Game Day',
+          still: '/playground/lego-charlotte/assets/stills/stadium.png',
+          poster: '/playground/lego-charlotte/assets/stadium-poster.jpg',
+          clip: '/playground/lego-charlotte/assets/vid/stadium.mp4',
+          accent: '#0085CA',
+          scroll: 1.7, linger: 0.45,
+          eyebrow: 'Sundays in Uptown',
+          title: 'Keep pounding.',
+          body: 'Sixty-five thousand bricks loud. The tour ends where the city roars.',
+          tags: ['Game day'],
+        },
+      ],
+      connectors: [],           // architecture A: legs chain directly
+      crossfade: 0.14,          // wider blend: absorbs Seedance's per-leg grade shift at seams
+    });
+  </script>
+</body>
+</html>

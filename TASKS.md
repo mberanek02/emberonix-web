@@ -12,4 +12,5 @@
 
 ## Done
 
+- **2026-07-12** — Playground section shipped: /playground landing page (branded card grid), Lego Charlotte scroll-world demo hosted statically at /playground/lego-charlotte, Navbar link, next.config rewrites. Build green (14 routes); deploy pending push.
 - **2026-06-11** — Dual-audience restructure (client work vs products, design vs agentic), Revive Resume project added with live-site screenshot, new Memotive monogram icon, truthful KPI strip, buyer-facing hero/nav/metadata copy.

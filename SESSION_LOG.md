@@ -2,13 +2,28 @@
 
 ## Current State
 
-**What's Working:** Production build green (13 static pages). Homepage restructured into dual-audience sales flow on branch `rebrand/spatial-brutalism`. Revive Resume added as second client project. New Memotive monogram icon in place.
+**What's Working:** Production build green (14 static pages incl. /playground). Homepage restructured into dual-audience sales flow. Revive Resume added as second client project. New Memotive monogram icon in place. Playground section live with Lego Charlotte scroll-world demo (77MB static assets in public/).
 
-**What's Broken / Incomplete:** Nothing known. Footer GitHub/LinkedIn bottom-strip links still point to bare domains (`github.com/`, `linkedin.com/`). Branch has a large uncommitted rebrand diff predating 2026-06-11.
+**What's Broken / Incomplete:** Footer GitHub/LinkedIn bottom-strip links still point to bare domains (`github.com/`, `linkedin.com/`). Playground commit not yet pushed/deployed.
 
 **Pending Queue:** see TASKS.md
 
 ---
+
+### 2026-07-12 — Playground section + Lego Charlotte demo
+
+**Focus:** Host the Lego Charlotte scroll-world demo (built today in Demo-Projects with the scroll-world skill) on emberonix.com behind a new "Playground" nav link.
+
+**Changes made:**
+- `public/playground/lego-charlotte/` — the full static demo (index.html, scrub-engine.js, 77MB of AI-generated video/stills). Asset paths absolutized to `/playground/lego-charlotte/...`; demo's brand wordmark links back to /playground.
+- `src/app/playground/page.tsx` — new branded landing page ("// PLAYGROUND", "Where the sparks fly off the anvil."), card grid driven by a local `playgroundProjects` array (scales for future fun builds).
+- `public/images/playground/lego-charlotte.jpg` — 1600×1000 card art from the demo's anchor still.
+- `src/components/Navbar.tsx` — added Playground link (between Products and Resume).
+- `next.config.mjs` — rewrites so `/playground/lego-charlotte` (± trailing slash) serves the static index.html.
+
+**Key decisions:** Name "Playground" chosen by Michael (over Sparks/Lab). Landing-page-plus-card structure over a bare deep link, so future experiments slot in as new cards. Demo hosted as plain static files inside public/ (same domain, no extra infra) — accepted the 77MB repo weight.
+
+**What's next:** push + Vercel deploy (awaiting Michael's go), verify demo scrubs on production, consider mobile encodes for the demo.
 
 ### 2026-06-11 — Dual-audience restructure, Revive Resume, new Memotive icon
 
