@@ -76,6 +76,30 @@ export const projects: Project[] = [
     ],
   },
 
+  {
+    id: 'breathe-mission',
+    name: 'Breathe Mission',
+    tagline:
+      'Editorial brand site for an astrology-as-diagnostic-tool practice — cosmic hero, natal-chart motion system, and a full content redesign.',
+    description:
+      "A visually rich web presence for Ishmael Heru-Bey's practice, which frames astrology as pattern recognition, behavioral analysis, and identity reprogramming. Kept the clinical charcoal/bone/orange identity but rebuilt the site as an editorial experience: a server-rendered SVG natal-chart hero that draws itself in, scroll-reveal choreography across every route, and a motion system gated by a single reduced-motion switch with a full no-JS fallback.",
+    tags: ['Web Design', 'Brand System', 'Next.js', 'SEO', 'Small Business'],
+    lob: 'design',
+    kind: 'client',
+    outcome:
+      'Took a content-strong but visually flat practitioner site and rebuilt it as an editorial experience — an animated natal-chart hero and scroll-reveal motion across all eight pages — while keeping the clinical charcoal/bone/orange identity and shipping accessible (reduced-motion + no-JS) and fast.',
+    liveUrl: 'https://www.breathemission.com',
+    featured: false,
+    image: '/images/projects/breathemission-hero.png',
+    imageStyle: 'screenshot',
+    stats: [
+      { label: '', value: 'Server-rendered SVG natal-chart hero' },
+      { label: '', value: 'Scroll-reveal motion system' },
+      { label: '', value: 'Reduced-motion + no-JS fallback' },
+      { label: '', value: 'Editorial redesign, all 8 routes' },
+    ],
+  },
+
   /* ── Own products — built and shipped solo ── */
   {
     id: 'memotive',
