@@ -130,6 +130,11 @@ function mountScrollWorld(container, config) {
   SECTIONS.forEach((s, i) => {
     const dive = { kind: 'dive', si: i, clip: s.clip, clipM: s.clipMobile, still: s.still,
                    poster: s.poster, posterM: s.posterMobile,
+                   // Canvas frame-sequence tier (phones): iOS Safari won't repaint a
+                   // paused <video> on currentTime seeks, so on phone-class devices we
+                   // paint pre-extracted frames to a <canvas> instead — deterministic
+                   // paint, no decoder. framesDir + framesN name f001.jpg … fNNN.jpg.
+                   framesDir: s.frames, framesN: s.framesCount || 0,
                    accent: s.accent, w: s.scroll || DIVE_W, linger: s.linger || 0 };
     SEGMENTS.push(dive);
     s._seg = dive;
@@ -240,6 +245,7 @@ function mountScrollWorld(container, config) {
     SEGMENTS.forEach(s => { s.start = off * vh; off += s.w * wf; s.end = off * vh; });
     totalW = off;
     track.style.height = (totalW * vh + vh) + 'px';   // +1vh so the last flight completes
+    SEGMENTS.forEach(s => { if (s.canvas) { sizeCanvas(s); if (s.ready) drawFrame(s, Math.max(s.lastIdx, 0)); } });
     read();
   }
 
@@ -257,14 +263,73 @@ function mountScrollWorld(container, config) {
         try { URL.revokeObjectURL(s.video.src); } catch (e) {}
         s.video.remove();
       }
+      if (s.canvas) { s.canvas.remove(); s.canvas = null; s.ctx = null; s.frames = null; }
       s.el.classList.remove('has-clip');
       s.video = null; s.hasClip = false; s.ready = false; s.loading = false;
     });
     read();
   }
 
+  // Phone path: paint pre-extracted frames to a canvas. iOS Safari does not reliably
+  // repaint a paused <video> when currentTime changes mid-scroll (observed on real
+  // devices: the flight froze to poster frames), so video scrubbing is desktop/tablet
+  // only; phones get deterministic canvas paint. Frames stream progressively — the
+  // scene reveals on the FIRST decoded frame and back-fills the rest.
+  function loadFrames(s) {
+    s.loading = true;
+    const n = s.framesN;
+    s.frames = new Array(n); s.lastIdx = -1;
+    const cv = document.createElement('canvas');
+    cv.className = 'sw-scene__video';
+    s.canvas = cv; s.ctx = cv.getContext('2d');
+    sizeCanvas(s);
+    s.el.appendChild(cv);
+    let started = 0, next = 0;
+    const kick = () => {
+      while (started - 0 < 6 && next < n) {   // ≤6 in flight
+        const idx = next++;
+        started++;
+        const im = new Image();
+        im.decoding = 'async';
+        im.onload = () => {
+          s.frames[idx] = im;
+          started--;
+          if (!s.ready) { s.ready = true; s.hasClip = true; drawFrame(s, 0); s.el.classList.add('has-clip'); read(); }
+          kick();
+        };
+        im.onerror = () => { started--; kick(); };
+        im.src = `${s.framesDir}/f${String(idx + 1).padStart(3, '0')}.jpg`;
+      }
+    };
+    kick();
+  }
+
+  function sizeCanvas(s) {
+    if (!s.canvas) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = s.el.clientWidth || window.innerWidth, h = s.el.clientHeight || window.innerHeight;
+    s.canvas.width = Math.round(w * dpr); s.canvas.height = Math.round(h * dpr);
+    s.lastIdx = -1;   // force repaint at the new size
+  }
+
+  function drawFrame(s, idx) {
+    // Draw the nearest loaded frame at or below idx (progressive loading may not
+    // have reached idx yet); cover-crop to fill the canvas.
+    let k = Math.min(idx, s.framesN - 1);
+    while (k > 0 && !s.frames[k]) k--;
+    const im = s.frames[k];
+    if (!im) return;
+    const cw = s.canvas.width, ch = s.canvas.height;
+    const sc = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+    const dw = im.naturalWidth * sc, dh = im.naturalHeight * sc;
+    s.ctx.drawImage(im, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+    s.lastIdx = idx;
+  }
+
   function loadClip(s) {
     if (stillsOnly || s.loading || !s.clip) return;
+    // Phones with a frame sequence use the canvas path; everyone else scrubs video.
+    if (phoneClass && s.framesDir && s.framesN) { loadFrames(s); return; }
     s.loading = true;
     // Serve the lighter mobile encode on phone-class devices when one was provided
     // (tablets and desktops get the full master — see phoneClass above).
@@ -344,6 +409,15 @@ function mountScrollWorld(container, config) {
     const eps = isMobile() ? 0.02 : 0.008;   // coarser seek step on phones = fewer decodes
     for (let i = 0; i < NSEG; i++) {
       const s = SEGMENTS[i];
+      // Canvas frame-sequence segments: pick the frame for the eased position and
+      // paint it. drawImage is synchronous — no decoder latency, no seek queue.
+      if (s.canvas && s.ready) {
+        if (!s.visible && Math.abs(s.cur - s.target) < 0.002) continue;
+        s.cur += (s.target - s.cur) * (reduce ? 1 : 0.18);
+        const idx = Math.round(clamp(s.cur, 0, 1) * (s.framesN - 1));
+        if (idx !== s.lastIdx) drawFrame(s, idx);
+        continue;
+      }
       if (!s.hasClip || !s.ready || !s.video) continue;
       // Never queue a seek while the decoder is still resolving the last one.
       // On phones a fast flick would otherwise pile up seeks and freeze the clip;
