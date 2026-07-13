@@ -49,6 +49,11 @@ export function NavV2() {
                 {l.label}
               </a>
             ))}
+            {/* Separate route (not an in-page section) — no section index */}
+            <Link href="/playground" className="nav-link mono-label text-text-secondary">
+              <span className="text-accent/60 mr-1.5">✦</span>
+              Playground
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -98,6 +103,21 @@ export function NavV2() {
               </span>
             </a>
           ))}
+          <Link
+            href="/playground"
+            onClick={() => setOpen(false)}
+            className="overflow-hidden group"
+          >
+            <span
+              className={`flex items-baseline gap-4 font-display uppercase text-5xl text-text-primary transition-transform duration-500 group-hover:text-accent ${
+                open ? 'translate-y-0' : 'translate-y-full'
+              }`}
+              style={{ transitionDelay: `${100 + LINKS.length * 60}ms` }}
+            >
+              <span className="mono-label text-accent">✦</span>
+              Playground
+            </span>
+          </Link>
           <span className="mono-label text-text-muted mt-10">// SITES THAT SELL ● AGENTS THAT SHIP</span>
         </nav>
       </div>
