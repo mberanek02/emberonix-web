@@ -90,7 +90,7 @@ export const projects: Project[] = [
       'Took a content-strong but visually flat practitioner site and rebuilt it as an editorial experience — an animated natal-chart hero and scroll-reveal motion across all eight pages — while keeping the clinical charcoal/bone/orange identity and shipping accessible (reduced-motion + no-JS) and fast.',
     liveUrl: 'https://www.breathemission.com',
     featured: false,
-    image: '/images/projects/breathemission-hero.png',
+    image: '/images/projects/breathemission-hero-v2.png',
     imageStyle: 'screenshot',
     stats: [
       { label: '', value: 'Server-rendered SVG natal-chart hero' },
