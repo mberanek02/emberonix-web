@@ -15,6 +15,14 @@ const nextConfig = {
         source: '/playground/lego-charlotte/',
         destination: '/playground/lego-charlotte/index.html',
       },
+      {
+        source: '/playground/vegas-matt',
+        destination: '/playground/vegas-matt/index.html',
+      },
+      {
+        source: '/playground/vegas-matt/',
+        destination: '/playground/vegas-matt/index.html',
+      },
     ];
   },
 };
