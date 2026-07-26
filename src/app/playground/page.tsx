@@ -20,9 +20,21 @@ type PlaygroundProject = {
   image: string;
   href: string;
   tags: string[];
+  cta: string;
 };
 
 const playgroundProjects: PlaygroundProject[] = [
+  {
+    id: 'vegas-matt',
+    title: 'The Cruise Ledger',
+    tagline: 'Seven days of slot machines, reverse-engineered from the footage',
+    description:
+      'Six hours of cruise-casino video sampled a frame per second and read with on-device OCR, turning what the machines displayed back into data: 3,074 spins, every bet and payout, and the jackpots an attendant paid in cash rather than to the meter. The result is a day-by-day ledger nobody kept at the time — balance after every spin, which games paid, and where the money actually went.',
+    image: '/images/playground/vegas-matt.jpg',
+    href: '/playground/vegas-matt',
+    tags: ['Frame-by-frame OCR', 'Reconstructed dataset', 'Static dashboard'],
+    cta: 'Read the ledger',
+  },
   {
     id: 'lego-charlotte',
     title: 'Lego Charlotte',
@@ -32,6 +44,7 @@ const playgroundProjects: PlaygroundProject[] = [
     image: '/images/playground/lego-charlotte.jpg',
     href: '/playground/lego-charlotte/',
     tags: ['Scroll-scrubbed video', 'AI-generated scenes', 'Vanilla JS engine'],
+    cta: 'Take the flight',
   },
 ];
 
@@ -99,7 +112,7 @@ export default function PlaygroundPage() {
                           ))}
                         </div>
                         <span className="mono-label text-accent">
-                          Take the flight &rarr;
+                          {project.cta} &rarr;
                         </span>
                       </div>
                     </div>
