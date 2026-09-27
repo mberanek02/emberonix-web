@@ -21,7 +21,7 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
         <p className="font-sans text-small text-text-muted mb-12">
-          Effective Date: March 24, 2026
+          Effective Date: September 27, 2026
         </p>
 
         <div className="space-y-10 font-sans text-body text-text-secondary leading-relaxed">
@@ -56,10 +56,13 @@ export default function PrivacyPage() {
               Conversation Data
             </h3>
             <p className="mb-4">
-              Messages you send to the AI coach, including text and photos, are
-              processed to provide personalized coaching. The coach maintains a
-              memory of your preferences, goals, dietary restrictions, and health
-              context to improve its guidance over time.
+              Messages you send to the AI coach, including text and photos, and
+              your journal entries and check-ins are processed to provide
+              personalized coaching. The coach maintains a memory of your
+              preferences, goals, dietary restrictions, and health context to
+              improve its guidance over time. Before any of this is sent to our AI
+              providers (see Section 4), the App asks for your permission; if you
+              don&rsquo;t agree, the coaching features can&rsquo;t be used.
             </p>
 
             <h3 className="font-sans text-body font-medium text-text-primary mt-4 mb-2">
@@ -79,9 +82,30 @@ export default function PrivacyPage() {
               Meal Photos
             </h3>
             <p className="mb-4">
-              Photos you submit for meal analysis are processed to estimate
-              nutritional content. Photos are transmitted to our servers for
-              analysis and are not retained after processing is complete.
+              Photos you submit for meal analysis are sent through our servers to
+              Anthropic to estimate nutritional content. We do not store meal
+              photos on our servers after analysis; only the resulting nutrition
+              estimate is saved.
+            </p>
+
+            <h3 className="font-sans text-body font-medium text-text-primary mt-4 mb-2">
+              Progress Photos (Optional)
+            </h3>
+            <p className="mb-4">
+              Progress photos you choose to save are stored in your account
+              (Supabase Storage) so you can view them later. You can delete them
+              at any time in the App.
+            </p>
+
+            <h3 className="font-sans text-body font-medium text-text-primary mt-4 mb-2">
+              Install Attribution
+            </h3>
+            <p className="mb-4">
+              To understand how people find Memotive, the App may send us
+              Apple&rsquo;s ad attribution token, which we exchange with Apple to
+              learn whether an install came from an Apple Search Ads campaign,
+              and your optional answer to &ldquo;How did you hear about
+              us?&rdquo;. This does not identify you to Apple or to advertisers.
             </p>
 
             <h3 className="font-sans text-body font-medium text-text-primary mt-4 mb-2">
@@ -125,8 +149,10 @@ export default function PrivacyPage() {
             <ul className="list-disc pl-6 space-y-2 text-text-muted">
               <li>
                 <strong className="text-text-secondary">Anthropic (Claude)</strong> &mdash;
-                AI language model that powers the coaching conversations. Your
-                messages are sent to Anthropic&rsquo;s API for processing.
+                AI language model that powers the coaching conversations and
+                reads meal photos. Your messages, the photos you share, and the
+                profile, meal, journal, cycle and Apple Health details your coach
+                uses are sent to Anthropic&rsquo;s API to generate responses.
                 Anthropic does not use your data to train its models.
               </li>
               <li>
@@ -135,8 +161,18 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong className="text-text-secondary">VoyageAI</strong> &mdash;
-                Text embeddings for the coaching memory system. Only semantic
-                representations of your data are processed, not raw content.
+                AI embeddings for the coaching memory system. The text of your
+                messages and of your coach&rsquo;s memories is sent to Voyage AI
+                to create searchable representations, so your coach can find what
+                you&rsquo;ve told it before.
+              </li>
+              <li>
+                <strong className="text-text-secondary">Brave Search</strong>
+                &mdash; When your coach needs to look something up (for example,
+                a restaurant or product you mention), it sends a short search
+                query to Brave&rsquo;s search API. Queries can include what you
+                asked about but not your account details. When you share a
+                link, the App&rsquo;s servers fetch that page to read it.
               </li>
               <li>
                 <strong className="text-text-secondary">Sentry</strong> &mdash;
@@ -145,7 +181,8 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong className="text-text-secondary">Apple</strong> &mdash;
-                Subscription billing and App Store distribution.
+                Subscription billing, App Store distribution, and Apple Search
+                Ads install attribution.
               </li>
             </ul>
           </section>
@@ -182,8 +219,8 @@ export default function PrivacyPage() {
             </h2>
             <p>
               We retain your data for as long as your account is active. You may
-              delete your account and all associated data at any time through the
-              App&rsquo;s Settings &gt; Data &amp; Privacy section. Upon account
+              delete your account and all associated data at any time in the App
+              under Profile &gt; Settings &gt; Delete Account. Upon account
               deletion, all personal data, conversation history, health data, and
               coaching memories are permanently removed from our servers within
               30 days.
